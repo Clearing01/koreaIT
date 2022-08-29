@@ -1,6 +1,6 @@
 package crawling;
 
-import java.io.FileOutputStream; 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,7 +16,6 @@ import dao.NovelDAO;
 import vo.NovelVO;
 
 public class Novel {
-//	public static void main(String [] args) {
 	public static void sample() {
       int N = 1;
       int n = 1; // 이미지 파일 번호

@@ -7,21 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import util.JDBCUtil;
-import vo.LlikeVO;
 import vo.MemberVO;
 
 public class MemberDAO {
    Connection conn;
    PreparedStatement pstmt;
    final String sql_selectOne_M="SELECT * FROM MEMBER WHERE MID=? AND MPW=?"; // 로그인 로직
-   final String sql_selectAll_M="SELECT * FROM MEMBER"; // 관리자에서 필요
+   final String sql_selectAll_M="SELECT * FROM MEMBER"; 
    final String sql_selectAll_ST="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
    final String sql_selectAll_NL="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
    final String sql_selectAll_RP="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
    // 신고/추천/비추천을 가리기위한 SELECTALL
    final String sql_insert_M="INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?)";
-   final String sql_update_M="UPDATE MEMBER SET MPW=?, NICKNAME=? WHERE MID=?";
+   final String sql_update_M="UPDATE MEMBER SET MPW=?, NICKNAME=? WHERE MID=?"; // 비밀번호 & 닉네임 변경
+   final String sql_update2_M="UPDATE MEMBER SET MPW=? WHERE MID='lisa'"; // 비밀번호 변경 
    final String sql_delete_M="DELETE FROM MEMBER WHERE MID=? AND MPW=?";
+   final String sql_check="SELECT * FROM MEMBER WHERE MID=?"; // 아이디 중복검사
+
 
    // 관리자 페이지에서 사용할 것 selectAll_ST = 추천 selectAll_NL = 비추천 selectAll_RP = 신고
    
@@ -131,7 +133,8 @@ public class MemberDAO {
          pstmt.setString(5, mvo.getMphone());
          pstmt.setString(6, mvo.getMemail());
          pstmt.setString(7, "member");
-         pstmt.executeQuery();
+         pstmt.executeUpdate();
+         
       } catch (SQLException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
@@ -164,6 +167,27 @@ public class MemberDAO {
       }
       return true;
    }
+
+    public boolean update2_M(MemberVO mvo) { //회원비밀번호 수정
+	      conn = JDBCUtil.connect();
+	      try {
+	         pstmt = conn.prepareStatement(sql_update2_M); 
+	         pstmt.setString(1, mvo.getMpw());
+	     //   pstmt.setString(2, mvo.getMid());
+	         int res = pstmt.executeUpdate();
+	         if (res == 0) {
+	            System.out.println("로그 : update2 실패");
+	            return false;
+	         }
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	         return false;
+	      } finally {
+	         JDBCUtil.disconnect(pstmt, conn);
+	      }
+	      return true;
+	   }
 
    public boolean delete_M(MemberVO mvo) { //회원탈퇴
       conn = JDBCUtil.connect();
@@ -248,5 +272,23 @@ public class MemberDAO {
       return datas;
    }
 
+    public int check(MemberVO vo) {
+	      conn=JDBCUtil.connect();
+	      System.out.println("로그DAO 중복검사");
+	      try {
+	         pstmt=conn.prepareStatement(sql_check);
+	         pstmt.setString(1, vo.getMid());
+	         ResultSet rs=pstmt.executeQuery();
+	         if(rs.next()) { // 아이디가 있니?
+	            return 0; // 아이디 중복 발생...
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return -1;
+	      } finally {
+	         JDBCUtil.disconnect(pstmt, conn);
+	      }
+	      return 1; // 아이디 중복 아님!
+	}
 
 }

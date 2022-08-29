@@ -1,171 +1,129 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib tagdir="WEB-INF/tags" prefix="bb" %>
+	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="bb"%>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-	<!-- Basic need -->
-	<title>커뮤니티</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="author" content="">
-	<link rel="profile" href="#">
+<!-- Basic need -->
+<title>커뮤니티</title>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<link rel="profile" href="#">
 
-    <!--Google Font-->
-    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
-	<!-- Mobile specific meta -->
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<meta name="format-detection" content="telephone-no">
+<!--Google Font-->
+<link rel="stylesheet"
+	href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+<!-- Mobile specific meta -->
+<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone-no">
 
-	<!-- CSS files -->
-	<link rel="stylesheet" href="css/plugins.css">
-	<link rel="stylesheet" href="css/style.css">
+<!-- CSS files -->
+<link rel="stylesheet" href="css/plugins.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
-<!-- header section-->
-<bb:header/>
-<!-- end of header section--> 
+	<!-- header section-->
+	<bb:header />
+	<!-- end of header section-->
 
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-					<h1> blog listing - list</h1>
-					<ul class="breadcumb">
-						<li class="active"><a href="#">Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span> blog listing</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-		<div class="buster-light">
-<!-- blog list section-->
-<div class="page-single">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-9 col-sm-12 col-xs-12">
-				<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it1.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">Godzilla: King Of The Monsters Adds O’Shea Jackson Jr</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>Africa's burgeoning animation scene got a boost this week with the announcement of an ambitious new partnership that will pair rising talents from across the continent ...</p>
-            		</div>
-            	</div>
-            	<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it2.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">Magnolia Nabs ‘Lucky’ Starring Harry Dean Stanton</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>Magnolia Pictures has acquired U.S. and international rights to the comedic drama Lucky John Carroll Lynch’s directorial debut. Lynch is an in-demand character actor who ...</p>
-            		</div>
-            	</div>
-				<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it3.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">‘Going in Style’ Tops ‘Smurfs: The Lost Village’ at Thursday Box Office</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>New Line’s remake of “Going in Style” launched with a moderate $600,000 on Thursday night, while Sony’s animated “Smurfs: The Lost Village” debuted with $375,000 ...</p>
-            		</div>
-            	</div>
-            	<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it4.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">India’s National Film Awards: ‘Kaasav’ Wins Best Picture</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>Although it sporadically errs on the side of sentimentality and simplification, "The Case for Christ" sustains interest, and even generates mild suspense ...</p>
-            		</div>
-            	</div>
-            	<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it5.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">‘Kong: Skull Island’ Tops $500 Million at Worldwide Box Office</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>King Kong is still a box office giant. “Kong: Skull Island” has crossed the $500 million mark at the worldwide box office. It’s the third 2017 title to hit the milestone after Disney’s ...</p>
-            		</div>
-            	</div>
-            	<div class="blog-item-style-1 blog-item-style-3">
-            		<img src="images/uploads/bloglist-it6.jpg" alt="">
-            		<div class="blog-it-infor">
-            			<h3><a href="blogdetail_light.html">Film Review: ‘Aftermath’</a></h3>
-            			<span class="time">27 Mar 2017</span>
-            			<p>"Aftermath" is a plane crash movie without a plane crash. Instead, the closest we get is a scene set in the control tower, where a computer screen shows two ...</p>
-            		</div>
-            	</div>
-            	<ul class="pagination">
-            		<li class="icon-prev"><a href="#"><i class="ion-ios-arrow-left"></i></a></li>
-            		<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">...</a></li>
-					<li><a href="#">21</a></li>
-					<li><a href="#">22</a></li>
-					<li class="icon-next"><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
-            	</ul>
-			</div>
-			<div class="col-md-3 col-sm-12 col-xs-12">
-				<div class="sidebar">
-					<div class="sb-search sb-it">
-						<h4 class="sb-title">Search</h4>
-						<input type="text" placeholder="Enter keywords">
-					</div>
-					<div class="sb-cate sb-it">
-						<h4 class="sb-title">Categories</h4>
-						<ul>
-							<li><a href="#">Awards (50)</a></li>
-							<li><a href="#">Box office (38)</a></li>
-							<li><a href="#">Film reviews (72)</a></li>
-							<li><a href="#">News (45)</a></li>
-							<li><a href="#">Global (06)</a></li>
-						</ul>
-					</div>
-					<div class="sb-recentpost sb-it">
-						<h4 class="sb-title">most popular</h4>
-						<div class="recent-item">
-							<span>01</span><h6><a href="#">Korea Box Office: Beauty and the Beast Wins Fourth</a></h6>
+	<div class="buster-light">
+		<!-- blog list section-->
+		<div class="page-single">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9 col-sm-12 col-xs-12">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-9 col-sm-12 col-xs-12">
+									<div id="Container">
+
+										<div id="Contents">
+											<div class="sub_title_area customer">
+												<h1>커뮤니티</h1>
+											</div>
+											<br>
+											<br>
+											<br>
+											<br>
+											<a href="communityForm.jsp"><button>글 작성하기</button></a>
+											<div class="TabsConts on">
+												<table class="board-list-1s">
+													<caption></caption>
+													<colgroup>
+														<col style="width: 9%;">
+														<col style="width: 9%;">
+														<col style="width: 67%;">
+														<col style="width: 15%;">
+														<!-- 2017-03-10 수정 : colgroup 영역 전체 복사+붙여넣기해주세요(각 항목 간격 수정) -->
+													</colgroup>
+													<thead>
+														<tr>
+															<th scope="col">번호</th>
+															<th scope="col">작성자</th>
+															<th scope="col">제목</th>
+															<th scope="col">등록일</th>
+														</tr>
+													</thead>
+													<tbody>
+														<ul class="noticeList" id="notice-list">
+															<c:forEach var="n" items="${datas}" begin="0" end="18" step="1">
+															<tr class="notice_fix">
+
+																<td>${n.nid}</td>
+																<td>${n.nwriter}</td>
+
+																<td class="subject"><strong class="FG01">일반
+																</strong><a
+																	href="javascript:counsel.noticeList.goDetail('35940')">
+																	${n.ntitle}	</a></td>
+																<td>${n.ngenre}</td>
+															</tr>
+															</c:forEach>
+															
+
+														</ul>
+														</div>
+													</tbody>
+												</table>
+											</div>
+
+										</div>
+
+									</div>
+
+									<ul class="pagination">
+										<li class="icon-prev"><a href="#"><i
+												class="ion-ios-arrow-left"></i></a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">...</a></li>
+										<li><a href="#">21</a></li>
+										<li><a href="#">22</a></li>
+										<li class="icon-next"><a href="#"><i
+												class="ion-ios-arrow-right"></i></a></li>
+									</ul>
+								</div>
+							</div>
 						</div>
-						<div class="recent-item">
-							<span>02</span><h6><a href="#">Homeland Finale Includes Shocking Death </a></h6>
-						</div>
-						<div class="recent-item">
-							<span>03</span><h6><a href="#">Fate of the Furious Reviews What the Critics Saying</a></h6>
-						</div>
-					</div>
-					<div class="sb-tags sb-it">
-						<h4 class="sb-title">tags</h4>
-						<ul class="tag-items">
-							<li><a href="#">Batman</a></li>
-							<li><a href="#">film</a></li>
-							<li><a href="#">homeland</a></li>
-							<li><a href="#">Fast & Furious</a></li>
-							<li><a href="#">Dead Walker</a></li>
-							<li><a href="#">King</a></li>
-							<li><a href="#">Beauty</a></li>
-						</ul>
-					</div>
-					<div class="ads">
-						<img src="images/uploads/ads1.png" alt="">
 					</div>
 				</div>
 			</div>
 		</div>
+		<!--end of blog list section-->
 	</div>
-</div>
-<!--end of blog list section-->
-		</div>
-<!-- footer section-->
-<bb:footer/>
-<!-- end of footer section-->
+	<!-- footer section-->
+	<bb:footer />
+	<!-- end of footer section-->
 
-<script src="js/jquery.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/plugins2.js"></script>
-<script src="js/custom.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/plugins2.js"></script>
+	<script src="js/custom.js"></script>
 </body>
 </html>

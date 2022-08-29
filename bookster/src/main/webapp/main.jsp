@@ -22,59 +22,49 @@
 	<!-- CSS files -->
 	<link rel="stylesheet" href="css/plugins.css">
 	<link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
 <!-- header section-->
 <bb:header/>
 <!-- end of header section-->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>	    
 <div class="top-search">
-	    	<select>
-				<option>소설명</option>
-				<option>작가</option>
-				<option>장르</option>
+	<form action="novelMain.do" method="post">
+	    	<select name="searchCondition">
+				<option selected value="NTITLE">소설명</option>
+				<option value="NGENRE">장르</option>
+				<option value="NWRITER">작가</option>
 			</select>
-			<input type="text" placeholder="작품명, 작가, 장르를 검색해 보세요.">
-	    </div>
+			<input type="text" name="searchContent" placeholder="작품명, 장르, 작가를 검색해 보세요.">
+			<input type="submit" value="검색">
+	</form>
+</div>
+
 
 <div class="slider movie-items">
 	<div class="container">
 		<div class="row">
-			<div class="social-link">
-				<p>Follow us: </p>
-				<a href="#"><i class="ion-social-facebook"></i></a>
-				<a href="#"><i class="ion-social-twitter"></i></a>
-				<a href="#"><i class="ion-social-googleplus"></i></a>
-				<a href="#"><i class="ion-social-youtube"></i></a>
-			</div>
+			
 	    	<div  class="slick-multiItemSlider">
-	    	<c:forEach var="n" items="${datas}" begin="1" end="8" step="1">
+	    	<c:forEach var="n" items="${datas}" begin="1" end="12" step="1">
 	    	
 	    		<div class="movie-item">
 	    			<div class="mv-img">
-	    				<a href="#"><img src="${n.nimg}" alt="" width="140px" height="200px"></a>
+	    				<a href="#"><img  src="${n.nimg}" alt="" width="280" height="400"></a>
 	    			</div>
+	    			<br>
+	    			<br>
+	    			<br>
+	    			<br>
+	    			<br>
 	    			<div class="title-in">
 	    				<div class="cate">
 	    					<span class="blue"><a href="#">${n.ngenre}</a></span>
 	    				</div>
-	    				<h6><a href="#">${n.ntitle}</a></h6>
-	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+	    				<h6>${n.ntitle}</h6>
+	    				<h6>${n.nwriter}</h6>
 	    			</div>
 	    		</div>
 	    		</c:forEach>
-	    		
-	    		
-	    		
-	    		
-				
 	    	</div>
 	    </div>
 	</div>
@@ -83,10 +73,10 @@
 <div class="movie-items">
 	<div class="container">
 		<div class="row ipad-width">
-			<div class="col-md-8">
+			<div class="col-md-81">
 				<div class="title-hd">
-					<h2>in theater</h2>
-					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+					<h2>판타지</h2>
+					<a href="#" class="viewall">전체보기 <i class="ion-ios-arrow-right"></i></a>
 				</div>
 				<div class="tabs">
 					<ul class="tab-links">
@@ -459,7 +449,7 @@
 				    </div>
 				</div>
 				<div class="title-hd">
-					<h2>on tv</h2>
+					<h1>무협</h1>
 					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
 				</div>
 				<div class="tabs">
@@ -910,9 +900,9 @@
 <div class="movie-items">
 	<div class="container">
 		<div class="row ipad-width">
-			<div class="col-md-8">
+			<div class="col-md-81">
 				<div class="title-hd">
-					<h2>in theater</h2>
+					<h2>로판</h2>
 					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
 				</div>
 				<div class="tabs">
@@ -1286,7 +1276,7 @@
 				    </div>
 				</div>
 				<div class="title-hd">
-					<h2>on tv</h2>
+					<h2>로맨스</h2>
 					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
 				</div>
 				<div class="tabs">
@@ -1730,12 +1720,11 @@
 				    </div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 </div>
-<div class="flex-wrap-movielist1 user-fav-list">
-					<li class="movie-item-style-2">
+<div class="flex-wrap-movielist12 user-fav-list12">
+					<div class="movie-item-style-2">
 						<img src="images/uploads/mv1.jpg" alt="">
 						<div class="mv-item-infor">
 							<h6><a href="#">oblivion <span>(2012)</span></a></h6>
@@ -1745,7 +1734,7 @@
 							<p>Director: <a href="#">Joss Whedon</a></p>
 							<p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
 						</div>
-					</li>
+					</div>
 					<div class="movie-item-style-2">
 						<img src="images/uploads/mv2.jpg" alt="">
 						<div class="mv-item-infor">

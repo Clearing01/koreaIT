@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib tagdir="WEB-INF/tags" prefix="bb" %>    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="bb" %>    
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -27,246 +29,49 @@
 <!-- header section-->
 <bb:header/>
 <!-- end of header section-->
-	    
+<div class="top-search">
+	<form action="novelMain.do" method="post">
+	    	<select name="searchCondition">
+				<option selected value="NTITLE">소설명</option>
+				<option value="NGENRE">장르</option>
+				<option value="NWRITER">작가</option>
+			</select>
+			<input type="text" name="searchContent" placeholder="작품명, 장르, 작가를 검색해 보세요.">
+			<input type="submit" value="검색">
+	</form>
+</div>	    
 <div class="buster-light">
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-					<h1> movie listing - grid</h1>
-					<ul class="breadcumb">
-						<li class="active"><a href="#">Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="page-single">
 	<div class="container">
 		<div class="row ipad-width">
 			<div class="col-md-8 col-sm-12 col-xs-12">
 				<div class="topbar-filter">
-					<p>Found <span>1,608 movies</span> in total</p>
-					<label>Sort by:</label>
-					<select>
-						<option value="popularity">Popularity Descending</option>
-						<option value="popularity">Popularity Ascending</option>
-						<option value="rating">Rating Descending</option>
-						<option value="rating">Rating Ascending</option>
-						<option value="date">Release date Descending</option>
-						<option value="date">Release date Ascending</option>
+					<p>소설&nbsp;<span>${fn:length(datas)}</span>&nbsp;in total</p>
+					<label name="searchCondition">장르:</label>
+					<select name="searchContent">
+						<option selected value="판타지">판타지</option>
+						<option value="로맨스">로맨스</option>
+						<option value="무협">무협</option>
+						<option value="로판">로판</option>
+						<option value="현판">현판</option>
 					</select>
 					<a href="movielist.html" class="list"><i class="ion-ios-list-outline "></i></a>
 					<a  href="moviegrid.html" class="grid"><i class="ion-grid active"></i></a>
 				</div>
 				<div class="flex-wrap-movielist">
+				<c:forEach var="n" items="${datas}" begin="1" end="20" step="1">
 						<div class="movie-item-style-2 movie-item-style-1">
-							<img src="images/uploads/mv1.jpg" alt="">
+							<img class="image" src="${n.nimg}" alt="" width="140" height="200">
 							<div class="hvr-inner">
 	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
 	            			</div>
 							<div class="mv-item-infor">
-								<h6><a href="#">oblivion</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
-							</div>
-						</div>					
-						<div class="movie-item-style-2 movie-item-style-1">
-							<img src="images/uploads/mv2.jpg" alt="">
-							<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-							<div class="mv-item-infor">
-								<h6><a href="#">into the wild</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>7.8</span> /10</p>
+								<h6>${n.ntitle}</h6>
+								<p class="rate"><i class="ion-android-star"></i><span>${n.nwriter}</span></p>
 							</div>
 						</div>
-					
-					
-						<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item3.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">Die hard</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-					
-					
-						<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item4.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">The walk</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-							<img src="images/uploads/mv3.jpg" alt="">
-							<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-							<div class="mv-item-infor">
-								<h6><a href="#">blade runner  </a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>7.3</span> /10</p>
-							</div>
-						</div>
-						<div class="movie-item-style-2 movie-item-style-1">
-							<img src="images/uploads/mv4.jpg" alt="">
-							<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-							<div class="mv-item-infor">
-								<h6><a href="#">Mulholland pride</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>7.2</span> /10</p>
-							</div>
-						</div>
-						<div class="movie-item-style-2 movie-item-style-1">
-							<img src="images/uploads/mv5.jpg" alt="">
-							<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-							<div class="mv-item-infor">
-								<h6><a href="#">skyfall: evil of boss</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>7.0</span> /10</p>
-							</div>
-						</div>
-						<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item1.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">Interstellar</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item2.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">The revenant</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-it10.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">harry potter</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-						<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-it11.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">guardians galaxy</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-it12.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">the godfather</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-						<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item6.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">blue velvet</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item7.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">gravity</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item8.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">southpaw</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-it9.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">jurassic park</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item9.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">the forest</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item10.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">spectre</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item11.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">strager things</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
-	            		<div class="movie-item-style-2 movie-item-style-1">
-	            			<img src="images/uploads/mv-item12.jpg" alt="">
-	            			<div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-	            			<div class="mv-item-infor">
-	            				<h6><a href="#">la la land</a></h6>
-	            				<p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-	            			</div>
-	            		</div>
+					</c:forEach>					
+						
 				</div>		
 				<div class="topbar-filter">
 					<label>Movies per page:</label>
@@ -276,67 +81,48 @@
 					</select>
 					
 					<div class="pagination2">
-						<span>Page 1 of 2:</span>
-						<a class="active" href="#">1</a>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">...</a>
-						<a href="#">78</a>
-						<a href="#">79</a>
+						<span>Page ${data[1].ncnt} of 5:</span>
+						<a href="novelMain.do?cnt=20">1</a>
+						<a href="novelMain.do?cnt=40">2</a>
+						<a href="novelMain.do?cnt=60">3</a>
+						<a href="novelMain.do?cnt=80">4</a>
+						<a href="novelMain.do?cnt=100">5</a>
 						<a href="#"><i class="ion-arrow-right-b"></i></a>
 					</div>
 				</div>
 			</div>
+			<!-- 사이드바 주석처리
 			<div class="col-md-4 col-sm-12 col-xs-12">
 				<div class="sidebar">
 					<div class="searh-form">
-						<h4 class="sb-title">Search for movie</h4>
-						<form class="form-style-1" action="#">
+						<h4 class="sb-title">소설 검색</h4>
+						<form class="form-style-1" action="NovelMain.do">
 							<div class="row">
 								<div class="col-md-12 form-it">
-									<label>Movie name</label>
-									<input type="text" placeholder="Enter keywords">
+									<label>제목</label>
+									
+									<input type="text" placeholder="제목을 입력해주세요">
 								</div>
 								<div class="col-md-12 form-it">
-									<label>Genres & Subgenres</label>
+									<label>장르</label>
 									<div class="group-ip">
-										<select
-											name="skills" multiple="" class="ui fluid dropdown">
-											<option value="">Enter to filter genres</option>
-											<option value="Action1">Action 1</option>
-					                        <option value="Action2">Action 2</option>
-					                        <option value="Action3">Action 3</option>
-					                        <option value="Action4">Action 4</option>
-					                        <option value="Action5">Action 5</option>
+										<select name="searchCondition" multiple="" class="ui fluid dropdown">
+											<option value="">장르를 선택해주세요.</option>
+											<option selected value="판타지">판타지</option>
+											<option value="로맨스">로맨스</option>
+											<option value="무협">무협</option>
+											<option value="로판">로판</option>
+											<option value="현판">현판</option>
 										</select>
 									</div>	
 								</div>
 								<div class="col-md-12 form-it">
-									<label>Rating Range</label>
-									<select>
-									  <option value="range">-- Select the rating range below --</option>
-									  <option value="saab">-- Select the rating range below --</option>
-									</select>
+									<label>작가</label>
+									<input type="text" placeholder="작가를 입력해주세요.">
 								</div>
-								<div class="col-md-12 form-it">
-									<label>Release Year</label>
-									<div class="row">
-										<div class="col-md-6">
-											<select>
-											  <option value="range">From</option>
-											  <option value="number">10</option>
-											</select>
-										</div>
-										<div class="col-md-6">
-											<select>
-											  <option value="range">To</option>
-											  <option value="number">20</option>
-											</select>
-										</div>
-									</div>
-								</div>
+								
 								<div class="col-md-12 ">
-									<input class="submit" type="submit" value="submit">
+									<input type="submit" value="검색" class="submit" >
 								</div>
 							</div>
 						</form>
@@ -359,6 +145,7 @@
 					</div>
 				</div>
 			</div>
+			-->
 		</div>
 	</div>
 </div>

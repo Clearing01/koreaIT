@@ -41,7 +41,7 @@ public class MainAction implements Action{
 		request.setAttribute("datas", datas);
 		
 		ActionForward forward=new ActionForward();
-		forward.setPath("/Main.jsp");
+		forward.setPath("main.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}

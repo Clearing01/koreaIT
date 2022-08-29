@@ -12,12 +12,11 @@ import vo.OpinionVO;
 public class OpinionDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectOne_O="SELECT * FROM OPINION LEFT OUTER JOIN MEMBER ON OPINION.MID=MEMBER.MID WHERE MID=?";
-	final String sql_selectAll_O="SELECT * FROM OPINION LEFT OUTER JOIN MEMBER ON OPINION.MID=MEMBER.MID ORDER BY OID DESC";
+	final String sql_selectOne_O="SELECT * FROM OPINION LEFT OUTER JOIN MEMBER ON OPINION.MID=MEMBER.NICKNAME WHERE OID=?";
+	final String sql_selectAll_O="SELECT * FROM OPINION LEFT OUTER JOIN MEMBER ON OPINION.MID=MEMBER.NICKNAME ORDER BY OID DESC";
+	// SQL 에서 변경했던 SELECTALL을 그대로 복사하여 기존에 검색하는 SELECTALL에 추가하였다.
 	
-	final String sql_selectAll_OPINION_SEARCH="SELECT * FROM OPINION LEFT OUTER JOIN MEMBER ON OPINION.MID=MEMBER.MID ORDER BY OID DESC WHERE MEMBER.MID=?";
-	
-	final String sql_insert_O="INSERT INTO OPINION VALUES((SELECT NVL(MAX(OID),2000)+1 FROM OPINION),?,TO_DATE(sysdate,'yyyy-mm-dd hh24:mi'),?,?,?)";
+	final String sql_insert_O="INSERT INTO OPINION VALUES((SELECT NVL(MAX(OID),2000)+1 FROM OPINION),?,to_char(sysdate,'yyyy.mm.dd hh24:mi'),?,?,?)";
 		// INSERT INTO OPINION VALUES((서브쿼리),?,?,?)
 	final String sql_update_O="UPDATE OPINION SET CONTENT=? WHERE OID=?";
 	final String sql_delete_O="DELETE FROM OPINION WHERE OID=?";

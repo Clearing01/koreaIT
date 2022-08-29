@@ -443,14 +443,19 @@ $(function(){
     });
 	//==js for login and sign up
 	var loginLink = $(".loginLink");
+	var loginLink1 = $(".loginLink1");
 	var signupLink = $(".signupLink");
 	var loginct = $( "#login-content" );
+	var loginct1 = $( "#login-content1" );
 	var signupct= $("#signup-content");
 	var loginWrap = $(".login-wrapper");
+
 	var overlay = $(".overlay");
+	
 	loginWrap.each( function(){
 		$(this).wrap('<div class="overlay"></div>')
 	});
+	
 	//pop up for login form
     loginLink.on('click', function(event){
     	event.preventDefault();
@@ -459,6 +464,21 @@ $(function(){
 		var target = $(e.target);
 		if ($(target).hasClass("overlay")){
 				$(target).find(loginct).each( function(){
+					$(this).removeClass("openform");
+				});
+				setTimeout( function(){
+					$(target).removeClass("openform");
+				}, 350);
+			}	
+		});
+    });
+    loginLink1.on('click', function(event){
+    	event.preventDefault();
+    	loginct1.parents(overlay).addClass("openform");
+		$(document).on('click', function(e){
+		var target = $(e.target);
+		if ($(target).hasClass("overlay")){
+				$(target).find(loginct1).each( function(){
 					$(this).removeClass("openform");
 				});
 				setTimeout( function(){

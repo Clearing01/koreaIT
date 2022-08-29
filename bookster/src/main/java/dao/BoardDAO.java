@@ -10,7 +10,6 @@ import set.BoardSet;
 import set.ReplySet;
 import util.JDBCUtil;
 import vo.BoardVO;
-import vo.NovelVO;
 import vo.ReplyVO;
 import vo.Reply_reVO;
 
@@ -19,13 +18,13 @@ public class BoardDAO {
 	PreparedStatement pstmt;
     final String sql_selectAll_BoardSearch="SELECT * FROM BOARD WHERE MID LIKE '%'||?||'%' AND BCONTENT LIKE '%'||?||'%' AND BTITLE LIKE '%'||?||'%' ORDER BY BID DESC";
     							// 게시글 검색
-	final String sql_selectOne_BoardOne="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID WHERE MID=?";
+	final String sql_selectOne_BoardOne="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID WHERE BID=?";
 								// 게시글 하나만 뽑는 것
 	final String sql_selectAll_BoardAll="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID ORDER BY BID DESC";
 								// 게시글 전체 뽑는 것
 	final String sql_selectAll_BoardAll_ADMIN="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID ORDER BY BID DESC WHERE MEMBER.MID=?";
 								// 게시글 전체 뽑는 것 = 내가 쓴 게시글 
-	final String sql_selectOne_ReplyOne="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHRER MID=?";
+	final String sql_selectOne_ReplyOne="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHRER RID=?";
 								// 댓글 하나만 뽑는 것
 	final String sql_selectAll_ReplyAll="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID ORDER BY RID DESC WHERE BOARD.MID=?";
 								// 댓글 전체 뽑는 것 = 내가 쓴 댓글 전체
@@ -121,7 +120,84 @@ public class BoardDAO {
 		}
 		return datas;
 	}
+	
+	   public BoardSet sql_selectOne_BoardOne(BoardVO bvo) {
+			conn=JDBCUtil.connect();
+			BoardSet bs = new BoardSet();
+			System.out.println("시작로그");
+			try {
+				pstmt=conn.prepareStatement(sql_selectOne_BoardOne);
+				ResultSet rs=pstmt.executeQuery();
+				System.out.println("시작한다?!");
+				while(rs.next()) {
+					BoardVO boardVO = new BoardVO();
+					boardVO.setBid(rs.getInt("BID"));
+					boardVO.setBcontent(rs.getString("BCONTENT"));
+					boardVO.setBtitle(rs.getString("BTITLT"));
+					boardVO.setBdate(rs.getString("BDATE"));
+					if(rs.getString("NICKNAME")==null) {
+						boardVO.setMid("[이름없음]");
+					} else {
+						// WRITER대신 MNAME을 담아서 WRITER를 뽑으면 MNAME이 출력된다.
+						boardVO.setMid(rs.getString("NICKNAME"));
+					}
+					bs.setBoardVO(boardVO);
 
+					ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
+					System.out.println("댓글 all로그");
+					pstmt=conn.prepareStatement(sql_selectAll_ReplyAll);
+					pstmt.setString(1, bvo.getMid());
+					ResultSet rs2 =pstmt.executeQuery();
+					System.out.println("댓글 all 로그 2");
+					while(rs2.next()) {
+						ReplyVO rvo = new ReplyVO();
+						ReplySet rSet = new ReplySet();
+						rvo.setRid(rs2.getInt("RID"));
+						rvo.setLid(rs2.getInt("LID"));
+						rvo.setBid(rs2.getInt("BID"));
+						rvo.setRcontent(rs2.getString("RCONTENT"));
+						rvo.setRdate(rs2.getString("RDATE"));
+						if(rs.getString("NICKNAME")==null) {
+							rvo.setMid("[이름없음]");
+						} else {
+							// WRITER대신 MNAME을 담아서 WRITER를 뽑으면 MNAME이 출력된다.
+							rvo.setMid(rs.getString("NICKNAME"));
+						}
+						rSet.setReplyVO(rvo);
+
+
+						ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
+						pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
+						ResultSet rs3 = pstmt.executeQuery();
+						while(rs3.next()) {
+							Reply_reVO rrvo = new Reply_reVO();
+							rrvo.setBid(rs3.getInt("BID"));
+							rrvo.setLid(rs3.getInt("LID"));
+							rrvo.setRid(rs3.getInt("RID"));
+							rrvo.setRrcontent(rs3.getString("RRCONTENT"));
+							rrvo.setRrdate(rs3.getString("RRDATE"));
+							rrvo.setRrid(rs3.getInt("RRID"));
+							if(rs.getString("NICKNAME")==null) {
+								rrvo.setMid("[이름없음]");
+							} else {
+								// WRITER대신 MNAME을 담아서 WRITER를 뽑으면 MNAME이 출력된다.
+								rrvo.setMid(rs.getString("NICKNAME"));
+							}
+							rrList.add(rrvo);		
+						}
+						rSet.setrrList(rrList);
+						replySet.add(rSet);
+						bs.setReplySet(replySet);
+
+					}
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+			return bs;
+	   }
 
 	   public ArrayList<BoardVO> sql_selectAll_BoardSearch(BoardVO bvo){
 		      ArrayList<BoardVO> datas=new ArrayList<BoardVO>();
@@ -157,12 +233,10 @@ public class BoardDAO {
 		conn=JDBCUtil.connect();
 		try {
 			pstmt=conn.prepareStatement(sql_insert_B);
-			pstmt.setInt(1, bvo.getBid());
-			pstmt.setString(2, bvo.getBtitle());
-			pstmt.setString(3, bvo.getBcontent());
-			pstmt.setString(4, bvo.getBdate());
-			pstmt.setString(5, bvo.getMid());
-			pstmt.setInt(6, bvo.getLid());
+			pstmt.setString(1, bvo.getBtitle());
+			pstmt.setString(2, bvo.getBcontent());
+			pstmt.setString(3, bvo.getMid());
+			pstmt.setInt(4, bvo.getLid()); 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

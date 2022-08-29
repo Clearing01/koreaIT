@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FrontController
  */
-@WebServlet("*.do") // *.do 요청을 수행하면 해당 어노테이션에 의해 FC로 오게됨!!!
+@WebServlet("*.do") // *.do 占쎌뒄筌ｏ옙占쎌뱽 占쎈땾占쎈뻬占쎈릭筌롳옙 占쎈퉸占쎈뼣 占쎈선占쎈걗占쎈�믭옙�뵠占쎈�∽옙肉� 占쎌벥占쎈퉸 FC嚥∽옙 占쎌궎野껊슢留�!!!
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -21,9 +21,9 @@ public class FrontController extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public FrontController() {
-    	// ★ FrontController fc=new FrontController(); xxx
-    	// 객체화를 하지않았는데, 메서드를 사용할수있었다...?!!
-    	// 서블릿 컨테이너(==객체를 관리하는 것) == 웹 서버 == 톰캣이 서블릿을 객체화해주고있었음!!    	
+    	// 占쎌겲 FrontController fc=new FrontController(); xxx
+    	// 揶쏆빘猿쒙옙�넅�몴占� 占쎈릭筌욑옙占쎈륫占쎈릭占쎈뮉占쎈쑓, 筌롫뗄苑뚳옙諭띄몴占� 占쎄텢占쎌뒠占쎈막占쎈땾占쎌뿳占쎈�占쎈뼄...?!!
+    	// 占쎄퐣�뇡遺얄뵺 �뚢뫂�믭옙�뵠占쎄섐(==揶쏆빘猿쒐몴占� �꽴占썹뵳�뗫릭占쎈뮉 野껓옙) == 占쎌럲 占쎄퐣甕곤옙 == 占쎈꽦筌�節뚯뵠 占쎄퐣�뇡遺얄뵺占쎌뱽 揶쏆빘猿쒙옙�넅占쎈퉸雅뚯눊�э옙�뿳占쎈�占쎌벉!!    	
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,6 +31,7 @@ public class FrontController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		actionDo(request, response);
 	}
@@ -38,6 +39,7 @@ public class FrontController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		actionDo(request, response);
 	}
@@ -52,23 +54,55 @@ public class FrontController extends HttpServlet {
 		
 		if(command.equals("/main.do")) {
 			try {
+				forward = new MainAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/novelMain.do")) {
+			try {
 				forward = new NovelMainAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/login.do")) {
+		else if(command.equals("/novelBoard.do")) {
 			try {
-				forward = new LoginAction().execute(request, response);
+				forward = new NovelBoardAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/logout.do")) {
+		else if(command.equals("/communityMain.do")) {
 			try {
-				forward = new LogoutAction().execute(request, response);
+				forward = new CommunityMainAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/communityBoard.do")) {
+			try {
+				forward = new CommunityBoardAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/loginM.do")) {
+			try {
+				forward = new LoginMAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/logoutM.do")) {
+			try {
+				forward = new LogoutMAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +124,38 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/updateB.do")) {
+			try {
+				forward = new UpdateBAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/updateO.do")) {
+			try {
+				forward = new UpdateOAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/updateR.do")) {
+			try {
+				forward = new UpdateRAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/updateRR.do")) {
+			try {
+				forward = new UpdateRRAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		else if(command.equals("/insertM.do")) {
 			try {
 				forward = new InsertMAction().execute(request, response);
@@ -106,6 +172,14 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/insertO.do")) {
+			try {
+				forward = new InsertOAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		else if(command.equals("/insertR.do")) {
 			try {
 				forward = new InsertRAction().execute(request, response);
@@ -114,17 +188,9 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/deleteB.do")) {
+		else if(command.equals("/insertRR.do")) {
 			try {
-				forward = new DeleteBAction().execute(request, response);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else if(command.equals("/deleteR.do")) {
-			try {
-				forward = new DeleteRAction().execute(request, response);
+				forward = new InsertRRAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,14 +204,39 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/fav.do")) {
+		else if(command.equals("/deleteB.do")) {
 			try {
-				forward = new FavAction().execute(request, response);
+				forward = new DeleteBAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/deleteO.do")) {
+			try {
+				forward = new DeleteOAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/deleteR.do")) {
+			try {
+				forward = new DeleteRAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/deleteRR.do")) {
+			try {
+				forward = new DeleteRRAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 
 /*		
 		if(forward==null) {
@@ -157,8 +248,8 @@ public class FrontController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
 		try {
 			dispatcher.forward(request, response);
-			// : 타겟페이지(인자)로 request, response 객체를 전달하는 메서드
-			// : 제어권을 넘겨줌 -> 클라이언트가 응답을 확인할 수 있음
+			// : 占쏙옙野껋옖�읂占쎌뵠筌욑옙(占쎌뵥占쎌쁽)嚥∽옙 request, response 揶쏆빘猿쒐몴占� 占쎌읈占쎈뼎占쎈릭占쎈뮉 筌롫뗄苑뚳옙諭�
+			// : 占쎌젫占쎈선亦낅슣�뱽 占쎄퐜野꺿뫁夷� -> 占쎄깻占쎌뵬占쎌뵠占쎈섧占쎈뱜揶쏉옙 占쎌벓占쎈뼗占쎌뱽 占쎌넇占쎌뵥占쎈막 占쎈땾 占쎌뿳占쎌벉
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -178,7 +269,7 @@ public class FrontController extends HttpServlet {
 		}
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();;
-		out.println("<script>alert('요청처리실패');history.go(-1);</script>");
+		out.println("<script>alert('요청처리실패!');history.go(-1);</script>");
 				
 	}
 }

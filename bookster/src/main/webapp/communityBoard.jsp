@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib tagdir="WEB-INF/tags" prefix="bb" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="bb" %>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -28,32 +29,19 @@
 <bb:header/>
 <!-- end of header section-->
 
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-					<h1> blog detail</h1>
-					<ul class="breadcumb">
-						<li class="active"><a href="#">Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span> blog listing</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-		<div class="buster-light">
+<div class="buster-light">
 <!-- blog detail section-->
 <div class="page-single">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="blog-detail-ct">
-					<h1>New Character Posters For Pirates Of The Caribbean</h1>
-					<span class="time">27 Mar 2017</span>
+					<h1>${data.btitle}</h1>
+					<span class="time">${data.bdate}</span>
 					<img src="images/uploads/blog-detail.jpg" alt="">
 					<p>
+					${data.bcontent}
+				
 					Joss Whedon has a little bit of a history with superhero movies, and for creating layered female characters. After his documented frustrations with Wonder Woman, he's getting another chance at the DC Extended Universe and Warner Bros., closing in on a deal to write direct and produce a Batgirl movie.</p>
 
 					<p>It's a somewhat surprising, but welcome move, given that Whedon has taken a long break to write something original, but has now pivoted to focus on developing the Batgirl project. First appearing in 1967 in Gardner Fox and Carmine Infantino's story run The Million Dollar Debut Of Batgirl, she's the superhero alias of Barbara Gordon, daughter of Gotham City Police Commissioner James Gordon. So we can likely expect J.K. Simmons' take on Gordon to appear along with other Bat-related characters.</p>
@@ -89,14 +77,14 @@
 					</div>
 					<!-- comment items -->
 					<div class="comments">
-						<h4>04 Comments</h4>
+						<h4>04 Comments rcnt.size()</h4>
 						<div class="cmt-item flex-it">
 							<img src="images/uploads/author.png" alt="">
 							<div class="author-infor">
 								<div class="flex-it2">
-									<h6><a href="#">Steve Perry</a></h6> <span class="time"> - 27 Mar 2017</span>
+									<h6><a href="#">m.nickname</a></h6> <span class="time"> r.rdate- 27 Mar 2017</span>
 								</div>
-								<p>Even though Journey's classic vocalist Steve Perry didn’t reunite with the band during their Rock Hall performance (to the dismay of hopeful fans), he did offer up a touching speech.</p>
+								<p>r.rcontent  Even though Journey's classic vocalist Steve Perry didn’t reunite with the band during their Rock Hall performance (to the dismay of hopeful fans), he did offer up a touching speech.</p>
 								<p><a class="rep-btn" href="#">+ Reply</a></p>
 							</div>
 						</div>
@@ -104,9 +92,9 @@
 							<img src="images/uploads/author2.png" alt="">
 							<div class="author-infor">
 								<div class="flex-it2">
-									<h6><a href="#">Joss Whedon</a></h6> <span class="time"> - 27 Mar 2017</span>
+									<h6><a href="#">m.nickname Joss Whedon</a></h6> <span class="time"> r.rrdate- 27 Mar 2017</span>
 								</div>
-								<p>Prince died not long after the 2016 Rock Hall ceremony, so this year's edition featured Lenny Kravitz and a full gospel choir performing a swamp-funk take on When Doves Cry.</p>
+								<p>r.rrcontent Prince died not long after the 2016 Rock Hall ceremony, so this year's edition featured Lenny Kravitz and a full gospel choir performing a swamp-funk take on When Doves Cry.</p>
 							</div>
 						</div>
 						<div class="cmt-item flex-it reply">
@@ -130,11 +118,11 @@
 						</div>
 					</div>
 					<div class="comment-form">
-						<h4>Leave a comment</h4>
-						<form action="">
+						<h4>댓글을 남겨주세요</h4>
+						<form action="insertR">
 							<div class="row">
 								<div class="col-md-4">
-									<input type="text" placeholder="Your name">
+									<input type="text" placeholder="${m.nickname}name">
 								</div>
 								<div class="col-md-4">
 									<input type="text" placeholder="Your email">
@@ -154,114 +142,15 @@
 					<!-- comment form -->
 				</div>
 			</div>
-			<div class="col-md-3 col-sm-12 col-xs-12">
-				<div class="sidebar">
-					<div class="sb-search sb-it">
-						<h4 class="sb-title">Search</h4>
-						<input type="text" placeholder="Enter keywords">
-					</div>
-					<div class="sb-cate sb-it">
-						<h4 class="sb-title">Categories</h4>
-						<ul>
-							<li><a href="#">Awards (50)</a></li>
-							<li><a href="#">Box office (38)</a></li>
-							<li><a href="#">Film reviews (72)</a></li>
-							<li><a href="#">News (45)</a></li>
-							<li><a href="#">Global (06)</a></li>
-						</ul>
-					</div>
-					<div class="sb-recentpost sb-it">
-						<h4 class="sb-title">most popular</h4>
-						<div class="recent-item">
-							<span>01</span><h6><a href="#">Korea Box Office: Beauty and the Beast Wins Fourth</a></h6>
-						</div>
-						<div class="recent-item">
-							<span>02</span><h6><a href="#">Homeland Finale Includes Shocking Death </a></h6>
-						</div>
-						<div class="recent-item">
-							<span>03</span><h6><a href="#">Fate of the Furious Reviews What the Critics Saying</a></h6>
-						</div>
-					</div>
-					<div class="sb-tags sb-it">
-						<h4 class="sb-title">tags</h4>
-						<ul class="tag-items">
-							<li><a href="#">Batman</a></li>
-							<li><a href="#">film</a></li>
-							<li><a href="#">homeland</a></li>
-							<li><a href="#">Fast & Furious</a></li>
-							<li><a href="#">Dead Walker</a></li>
-							<li><a href="#">King</a></li>
-							<li><a href="#">Beauty</a></li>
-						</ul>
-					</div>
-					<div class="ads">
-						<img src="images/uploads/ads1.png" alt="">
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
 <!-- end of  blog detail section-->
 		</div>
-<!-- footer section-->
-<footer class="ht-footer">
-	<div class="container">
-		<div class="flex-parent-ft">
-			<div class="flex-child-ft item1">
-				 <a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-			</div>
-			<div class="flex-child-ft item2">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="#">About</a></li> 
-					<li><a href="#">Blockbuster</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Forums</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Help Center</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item3">
-				<h4>Legal</h4>
-				<ul>
-					<li><a href="#">Terms of Use</a></li> 
-					<li><a href="#">Privacy Policy</a></li>	
-					<li><a href="#">Security</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item4">
-				<h4>Account</h4>
-				<ul>
-					<li><a href="#">My Account</a></li> 
-					<li><a href="#">Watchlist</a></li>	
-					<li><a href="#">Collections</a></li>
-					<li><a href="#">User Guide</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item5">
-				<h4>Newsletter</h4>
-				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-				<form action="#">
-					<input type="text" placeholder="Enter your email...">
-				</form>
-				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-			</div>
-		</div>
-	</div>
-	<div class="ft-copyright">
-		<div class="ft-left">
-			<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
-		</div>
-		<div class="backtotop">
-			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
-		</div>
-	</div>
-</footer>
-<!-- end of footer section-->
+
+<!-- header section-->
+<bb:footer/>
+<!-- end of header section-->
 
 <script src="js/jquery.js"></script>
 <script src="js/plugins.js"></script>

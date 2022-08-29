@@ -22,6 +22,10 @@ public class NovelMainAction implements Action{
 		String searchContent = request.getParameter("searchContent");
 		String paramCnt=request.getParameter("cnt");
 		
+		System.out.println("노벨메인 로그[" + searchCondition+"]");
+		System.out.println("노벨메인 로그[" + searchContent+"]");
+		System.out.println("노벨메인 로그[" + paramCnt+"]");
+		
 		if(paramCnt==null || paramCnt.equals("")){
 			vo.setNcnt(20);
 		}

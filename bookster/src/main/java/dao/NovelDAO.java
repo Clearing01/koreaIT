@@ -21,7 +21,7 @@ public class NovelDAO {
    final String sql_sample = "SELECT COUNT(*) AS CNT FROM NOVEL";
    
    
-   public boolean insert_N(NovelVO vo) {
+   public boolean insert_N(NovelVO nvo) {
          conn = JDBCUtil.connect(); 
          try {
  //      	pstmt = conn.prepareStatement(sql_selectAll_AVG);
@@ -29,11 +29,11 @@ public class NovelDAO {
  //       	ResultSet rs2 = pstmt.executeQuery();
         	 
             pstmt = conn.prepareStatement(sql_insert_N);
-            pstmt.setString(1, vo.getNtitle());
-            pstmt.setString(2, vo.getNcontent());
-            pstmt.setString(3, vo.getNimg());
-            pstmt.setString(4, vo.getNgenre()); 
-            pstmt.setString(5, vo.getNwriter()); 
+            pstmt.setString(1, nvo.getNtitle());
+            pstmt.setString(2, nvo.getNcontent());
+            pstmt.setString(3, nvo.getNimg());
+            pstmt.setString(4, nvo.getNgenre()); 
+            pstmt.setString(5, nvo.getNwriter()); 
             pstmt.setDouble(6, 0);
             //rs2.getDouble("AVG")
 
@@ -73,17 +73,36 @@ public class NovelDAO {
       }      
       return null;
    }
+   
    public ArrayList<NovelVO> selectAll_N(NovelVO nvo){
       ArrayList<NovelVO> datas=new ArrayList<NovelVO>();
       conn=JDBCUtil.connect();
       try {
             pstmt=conn.prepareStatement(sql_selectAll_N);
-            pstmt.setString(1, nvo.getNtitle());
-            pstmt.setString(2, nvo.getNgenre());
-            pstmt.setString(3, nvo.getNwriter());
+            if(nvo.getSearchContent()==null) { // 검색 내용이 없는 경우
+				System.out.println("로그 : 검색");
+				pstmt.setString(1, "");
+				pstmt.setString(2, "");
+				pstmt.setString(3, "");
+			}
+			else if(nvo.getSearchCondition().equals("NTITLE")) {
+				pstmt.setString(1, nvo.getSearchContent());
+				pstmt.setString(2, "");
+				pstmt.setString(3, "");
+			}
+			else if(nvo.getSearchCondition().equals("NGENRE")) {
+				pstmt.setString(1, "");
+				pstmt.setString(2, nvo.getSearchContent());
+				pstmt.setString(3, "");
+			}
+			else if(nvo.getSearchCondition().equals("NWRITER")) {
+				pstmt.setString(1, "");
+				pstmt.setString(2, "");
+				pstmt.setString(3, nvo.getSearchContent());
+			}
             pstmt.setInt(4,nvo.getNcnt());
             ResultSet rs=pstmt.executeQuery();
-            System.out.println("로그 : ");
+//            System.out.println("로그 : ");
          while(rs.next()) {
             NovelVO data=new NovelVO();
             data.setNid(rs.getInt("NID"));
@@ -92,7 +111,7 @@ public class NovelDAO {
             data.setNimg(rs.getString("NIMG"));
             data.setNgenre(rs.getString("NGENRE"));
             data.setNwriter(rs.getString("NWRITER"));
-            System.out.println("로그 :" + data);
+//            System.out.println("로그 :" + data);
             datas.add(data);
          }
       } catch (SQLException e) {
