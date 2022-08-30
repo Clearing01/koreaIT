@@ -8,16 +8,30 @@ public class NovelVO {
 	private String nimg;
 	private String ngenre;
 	private String nwriter;
-	private int oid;
 	private String searchCondition;
 	private String searchContent;
+	private double avg;
 	private int ncnt; // 페이징처리를 위한 변수
 	
-	public int getOid() {
-		return oid;
+	
+	
+	public double getAvg() {
+		return avg;
 	}
-	public void setOid(int oid) {
-		this.oid = oid;
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public String getSearchCondition() {
+		return searchCondition;
+	}
+	public void setSearchCondition(String searchCondition) {
+		this.searchCondition = searchCondition;
+	}
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
 	}
 	public int getNcnt() {
 		return ncnt;
@@ -61,23 +75,12 @@ public class NovelVO {
 	public void setNgenre(String ngenre) {
 		this.ngenre = ngenre;
 	}
-	
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
-	}
-	public String getSearchContent() {
-		return searchContent;
-	}
-	public void setSearchContent(String searchContent) {
-		this.searchContent = searchContent;
-	}
 	@Override
 	public String toString() {
 		return "NovelVO [nid=" + nid + ", ntitle=" + ntitle + ", ncontent=" + ncontent + ", nimg=" + nimg + ", ngenre="
-				+ ngenre + ", nwriter=" + nwriter + ", oid=" + oid + ", searchCondition=" + searchCondition
-				+ ", searchContent=" + searchContent + ", ncnt=" + ncnt + "]";
+				+ ngenre + ", nwriter=" + nwriter + ", searchCondition=" + searchCondition + ", searchContent="
+				+ searchContent + ", avg=" + avg + ", ncnt=" + ncnt + "]";
 	}
+	
+	
 }

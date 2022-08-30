@@ -5,8 +5,8 @@ import java.util.Random;
 
 import org.json.simple.JSONObject;
 
-import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import oracle.jdbc.driver.Message;
 import vo.SmsVO;
 
 public class SmsDAO {
@@ -15,7 +15,7 @@ public class SmsDAO {
 		String api_key = "NCSAYRI28CRZXD5G"; // 회원가입 시 발급받은 api키
 		String api_secret = "FLVOMXL86R6IEMSKLGKBAUKCULDIREZQ"; // 회원가입 시 발급받은 secret api키
 		Message coolsms = new Message(api_key, api_secret);
-
+		
 		Random rd = new Random();
 		int randMpw = rd.nextInt(899999)+100000; // 임의로 만든 랜덤 비밀번호 
 		

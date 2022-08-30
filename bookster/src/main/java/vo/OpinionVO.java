@@ -7,7 +7,18 @@ public class OpinionVO {
 	private String odate;
 	private String mid;
 	private int lid;
+	private int nid;
 	private int ostar;
+	
+	
+	
+	
+	public int getNid() {
+		return nid;
+	}
+	public void setNid(int nid) {
+		this.nid = nid;
+	}
 	public int getOid() {
 		return oid;
 	}
@@ -47,7 +58,7 @@ public class OpinionVO {
 	@Override
 	public String toString() {
 		return "OpinionVO [oid=" + oid + ", ocontent=" + ocontent + ", odate=" + odate + ", mid=" + mid + ", lid=" + lid
-				+ ", ostar=" + ostar + "]";
+				+ ", nid=" + nid + ", ostar=" + ostar + "]";
 	}
 	
 	

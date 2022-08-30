@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,10 @@ public class Reply_reDAO {
 	PreparedStatement pstmt;
 	final String sql_selectOne_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.NICKNAME WHERE RRID=?";
 	final String sql_selectAll_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.NICKNAME ORDER BY RRID DESC";
-	final String sql_insert_RR="INSERT INTO REPLY_RE VALUES((SELECT NVL(MAX(RRID),4000)+1 FROM REPLY_RE),?,to_char(sysdate,'yyyy.mm.dd hh24:mi'),?,?,?)";
+	// SQL 에서 변경했던 SELECTALL을 그대로 복사하여 기존에 검색하는 SELECTALL에 추가하였다.
+	
+	final String sql_insert_RR="INSERT INTO REPLY_RE VALUES((SELECT NVL(MAX(RRID),4000)+1 FROM REPLY_RE),?,TO_DATE(sysdate,'yyyy.mm.dd hh24:mi'),?,?,?)";
+		// INSERT INTO BOARD VALUES((서브쿼리),?,?,?)
 	final String sql_update_RR="UPDATE REPLY_RE SET CONTENT=? WHERE RRID=?";
 	final String sql_delete_RR="DELETE FROM REPLY_RE WHERE RRID=?";
 	
@@ -48,9 +51,12 @@ public class Reply_reDAO {
 	public ArrayList<Reply_reVO> selectAll_RR(Reply_reVO rrvo){
 		ArrayList<Reply_reVO> datas=new ArrayList<Reply_reVO>();
 		conn=JDBCUtil.connect();
+		System.out.println("시작");
 		try {
 			pstmt=conn.prepareStatement(sql_selectAll_RR);
 			ResultSet rs=pstmt.executeQuery();
+			System.out.println("중간");
+
 			while(rs.next()) {
 				Reply_reVO data=new Reply_reVO();
 				data.setRrid(rs.getInt("RRID"));
@@ -70,6 +76,7 @@ public class Reply_reDAO {
 		} finally {
 			JDBCUtil.disconnect(pstmt, conn);
 		}
+		System.out.println("끝");
 
 		return datas;
 	}

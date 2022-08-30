@@ -2,7 +2,6 @@ package ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.BoardDAO;
 import vo.BoardVO;
@@ -11,15 +10,14 @@ public class InsertBAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		ActionForward forward = null;
 		BoardDAO dao = new BoardDAO();
 		BoardVO vo = new BoardVO();
 		
-		HttpSession session=request.getSession();
-		vo.setMid((String)session.getAttribute("mid"));
+		vo.setMid(request.getParameter("mid"));
 		vo.setBtitle(request.getParameter("btitle"));
 		vo.setBcontent(request.getParameter("bcontent"));
-		vo.setLid(Integer.parseInt(request.getParameter("lid")));
 		
 		if(dao.insert_B(vo)) {
 			forward = new ActionForward();

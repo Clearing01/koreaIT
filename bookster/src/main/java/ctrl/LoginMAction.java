@@ -8,7 +8,7 @@ import dao.MemberDAO;
 import vo.MemberVO;
 
 
-public class loginMAction implements Action{
+public class LoginMAction implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -29,7 +29,7 @@ public class loginMAction implements Action{
 			session.setAttribute("member", member);
 		}
 		else {
-			System.out.println("๋ก๊ทธ: ๋ก๊ทธ์ธ ์คํจ");
+			System.out.println("๋ก๊ทธ: ๋ก๊ทธ?ธ ?ค?จ");
 		}
 		
 		ActionForward forward = new ActionForward();

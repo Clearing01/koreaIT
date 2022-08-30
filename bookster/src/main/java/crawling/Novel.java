@@ -1,6 +1,6 @@
 package crawling;
 
-import java.io.FileOutputStream;
+import java.io.FileOutputStream; 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,6 +16,7 @@ import dao.NovelDAO;
 import vo.NovelVO;
 
 public class Novel {
+//	public static void main(String [] args) {
 	public static void sample() {
       int N = 1;
       int n = 1; // 이미지 파일 번호
@@ -89,7 +90,7 @@ public class Novel {
                try {
                   url = new URL(img2); // url 객체에 이미지 주소를 담음
                   in = url.openStream(); // in 객체에 url 정보 담음(받고싶은 데이터 연결), 열림 1
-                  out = new FileOutputStream("D:\\0607Park\\포스터\\"+n+".png"); // out 객체에 저장경로(저장을 원하는 위치) 입력
+                  out = new FileOutputStream("C:\\0607min\\img\\"+n+".png"); // out 객체에 저장경로(저장을 원하는 위치) 입력
                   n++;
                   while(true) {
                      int data = in.read(); // in 객체로 해당 이미지를 읽어들임

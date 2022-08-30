@@ -9,6 +9,8 @@ public class Reply_reVO {
 	private int lid;
 	private int bid;
 	private int rid;
+	
+	
 	public int getRrid() {
 		return rrid;
 	}

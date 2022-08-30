@@ -6,11 +6,21 @@ public class LlikeVO {
 	private String mid;
 	private int oid;
 	private int bid;
+	private int rid;
 	private int lstatus;
 	private int nlstatus;
 	private int report;
 	
 	
+	
+	
+	
+	public int getRid() {
+		return rid;
+	}
+	public void setRid(int rid) {
+		this.rid = rid;
+	}
 	public int getLid() {
 		return lid;
 	}
@@ -55,8 +65,8 @@ public class LlikeVO {
 	}
 	@Override
 	public String toString() {
-		return "LlikeVO [lid=" + lid + ", mid=" + mid + ", oid=" + oid + ", bid=" + bid + ", lstatus=" + lstatus
-				+ ", nlstatus=" + nlstatus + ", report=" + report + "]";
+		return "LlikeVO [lid=" + lid + ", mid=" + mid + ", oid=" + oid + ", bid=" + bid + ", rid=" + rid + ", lstatus="
+				+ lstatus + ", nlstatus=" + nlstatus + ", report=" + report + "]";
 	}
 	
 	

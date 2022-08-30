@@ -2,7 +2,6 @@ package ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.ReplyDAO;
 import vo.ReplyVO;
@@ -17,10 +16,9 @@ public class InsertRAction implements Action{
 		ActionForward forward = null;
 		ReplyDAO dao = new ReplyDAO();
 		ReplyVO vo = new ReplyVO();
-		HttpSession session=request.getSession();
 		
 		vo.setRcontent(request.getParameter("content"));
-		vo.setMid((String)session.getAttribute("mid"));
+		vo.setMid(request.getParameter("mid"));
 		vo.setLid(Integer.parseInt(request.getParameter("lid")));
 		vo.setBid(Integer.parseInt(request.getParameter("bid")));	
 		
@@ -32,7 +30,7 @@ public class InsertRAction implements Action{
 			forward.setRedirect(false);
 		}
 		else {
-			throw new Exception("insertR ï¿½ï¿½ï¿½ï¿½");
+			throw new Exception("insertR ¿À·ù");
 		}
 		
 		request.setAttribute("cnt", request.getParameter("cnt"));

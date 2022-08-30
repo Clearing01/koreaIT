@@ -7,10 +7,25 @@ public class BoardVO {
 	private String bcontent;
 	private String bdate;
 	private String mid;
-	private int lid;
+	private String searchCondition;
+	private String searchContent;
 	private int bcnt; // 페이징 처리를 위한 변수
 	
 	
+	
+
+	public String getSearchCondition() {
+		return searchCondition;
+	}
+	public void setSearchCondition(String searchCondition) {
+		this.searchCondition = searchCondition;
+	}
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
 	public int getBcnt() {
 		return bcnt;
 	}
@@ -47,16 +62,12 @@ public class BoardVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public int getLid() {
-		return lid;
-	}
-	public void setLid(int lid) {
-		this.lid = lid;
-	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [bid=" + bid + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bdate=" + bdate + ", mid="
-				+ mid + ", lid=" + lid + ", bcnt=" + bcnt + "]";
+				+ mid + ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + ", bcnt=" + bcnt
+				+ "]";
 	}
 	
 	

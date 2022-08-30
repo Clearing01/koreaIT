@@ -17,7 +17,7 @@ public class UpdateMAction implements Action{
 		MemberVO vo = new MemberVO();
 		MemberDAO dao = new MemberDAO();
 		
-		vo.setMid((String)session.getAttribute("mid"));
+		vo.setMid(request.getParameter("mid"));
 		vo.setMpw(request.getParameter("mpw"));
 		vo.setMname(request.getParameter("mname"));
 
@@ -28,7 +28,7 @@ public class UpdateMAction implements Action{
 			forward.setRedirect(true);
 		}
 		else {
-			throw new Exception("updateM ï¿½ï¿½ï¿½ï¿½");
+			throw new Exception("updateM ¿À·ù");
 		}
 		
 		return forward;
@@ -39,12 +39,12 @@ public class UpdateMAction implements Action{
 /*
 		else if(action.equals("memberUpdate")){
 			if(mDAO.update(mVO)){
-				session.invalidate(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
-				// session.removeAttribute("member"); ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+				session.invalidate(); // ¼¼¼Ç Á¤º¸ ÀüÃ¼ Á¦°ÅÇÏ±â
+				// session.removeAttribute("member"); ÀÏÁ¤ Á¤º¸ Å¸°ÙÇÏ¿© »èÁ¦µµ °¡´É
 				response.sendRedirect("login.jsp");
 			}
 			else {
-				throw new Exception("memberUpdate ï¿½ï¿½ï¿½ï¿½");
+				throw new Exception("memberUpdate ¿À·ù");
 			}
 		}
 */

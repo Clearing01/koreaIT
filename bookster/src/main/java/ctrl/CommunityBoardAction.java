@@ -15,19 +15,20 @@ public class CommunityBoardAction implements Action{
 		BoardDAO dao = new BoardDAO();
 		BoardVO vo = new BoardVO();
 		
+		
 //		vo.setSearchContent(searchContent);
 //		vo.setSearchCondition(searchCondition);
-		vo.setBid(Integer.parseInt(request.getParameter("bid")));
+		
 		BoardSet data = dao.sql_selectOne_BoardOne(vo);
 		
 		if(data != null) {
 			request.setAttribute("data", data);
 			forward=new ActionForward();
-			forward.setPath("/communityBoard.jsp");
+			forward.setPath("/community.jsp");
 			forward.setRedirect(false);
 		}
 		else {
-			throw new Exception("CBselectOne 오류");
+			throw new Exception("CBselectOne ����");
 		}
 		
 		request.setAttribute("cnt", request.getParameter("cnt"));

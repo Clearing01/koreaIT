@@ -26,10 +26,12 @@ public class Check extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("로그1 ["+request.getParameter("mid")+"]");
 		

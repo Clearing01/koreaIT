@@ -2,7 +2,6 @@ package ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.OpinionDAO;
 import vo.OpinionVO;
@@ -15,10 +14,9 @@ public class InsertOAction implements Action {
 		ActionForward forward = null;
 		OpinionDAO dao = new OpinionDAO();
 		OpinionVO vo = new OpinionVO();
-		HttpSession session=request.getSession();
 		
 		vo.setOcontent(request.getParameter("ocontent"));
-		vo.setMid((String)session.getAttribute("mid"));
+		vo.setMid(request.getParameter("mid"));
 		vo.setLid(Integer.parseInt(request.getParameter("lid")));
 		vo.setOstar(Integer.parseInt(request.getParameter("ostar")));
 		
@@ -30,7 +28,7 @@ public class InsertOAction implements Action {
 			forward.setRedirect(true);
 		}
 		else {
-			throw new Exception("insertO ï¿½ï¿½ï¿½ï¿½");
+			throw new Exception("insertO ¿À·ù");
 		}
 					
 		return forward;

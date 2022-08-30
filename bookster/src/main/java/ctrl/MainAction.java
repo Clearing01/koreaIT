@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.BoardDAO;
 import dao.NovelDAO;
-import set.BoardSet;
-import vo.BoardVO;
 import vo.NovelVO;
 
 
@@ -41,7 +38,7 @@ public class MainAction implements Action{
 		request.setAttribute("datas", datas);
 		
 		ActionForward forward=new ActionForward();
-		forward.setPath("main.jsp");
+		forward.setPath("/main.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}
