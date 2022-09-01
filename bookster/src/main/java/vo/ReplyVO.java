@@ -6,8 +6,9 @@ public class ReplyVO {
 	private String rcontent;
 	private String rdate;
 	private String mid;
-	private int lid;
 	private int bid;
+	
+	
 	public int getRid() {
 		return rid;
 	}
@@ -32,12 +33,6 @@ public class ReplyVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public int getLid() {
-		return lid;
-	}
-	public void setLid(int lid) {
-		this.lid = lid;
-	}
 	public int getBid() {
 		return bid;
 	}
@@ -46,8 +41,8 @@ public class ReplyVO {
 	}
 	@Override
 	public String toString() {
-		return "ReplyVO [rid=" + rid + ", rcontent=" + rcontent + ", rdate=" + rdate + ", mid=" + mid + ", lid=" + lid
-				+ ", bid=" + bid + "]";
+		return "ReplyVO [rid=" + rid + ", rcontent=" + rcontent + ", rdate=" + rdate + ", mid=" + mid + ", bid=" + bid
+				+ "]";
 	}
 
 	

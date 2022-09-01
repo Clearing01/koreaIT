@@ -12,8 +12,8 @@ import vo.Reply_reVO;
 public class Reply_reDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectOne_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.NICKNAME WHERE RRID=?";
-	final String sql_selectAll_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.NICKNAME ORDER BY RRID DESC";
+	final String sql_selectOne_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.MID WHERE RRID=?";
+	final String sql_selectAll_RR="SELECT * FROM REPLY_RE LEFT OUTER JOIN MEMBER ON REPLY_RE.MID=MEMBER.MID ORDER BY RRID DESC";
 	// SQL 에서 변경했던 SELECTALL을 그대로 복사하여 기존에 검색하는 SELECTALL에 추가하였다.
 	
 	final String sql_insert_RR="INSERT INTO REPLY_RE VALUES((SELECT NVL(MAX(RRID),4000)+1 FROM REPLY_RE),?,TO_DATE(sysdate,'yyyy.mm.dd hh24:mi'),?,?,?)";
@@ -86,8 +86,8 @@ public class Reply_reDAO {
 			pstmt=conn.prepareStatement(sql_insert_RR);
 			pstmt.setString(1, rrvo.getRrcontent());
 			pstmt.setString(2, rrvo.getMid());
-			pstmt.setInt(3, rrvo.getLid());
-			pstmt.setInt(4, rrvo.getBid());
+			pstmt.setInt(3, rrvo.getBid());
+			pstmt.setInt(4, rrvo.getRid());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

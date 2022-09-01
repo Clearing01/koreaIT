@@ -11,24 +11,26 @@ public class UpdateMAction implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session=request.getSession();
 		
 		ActionForward forward = null;
 		MemberVO vo = new MemberVO();
 		MemberDAO dao = new MemberDAO();
+				
+		HttpSession session=request.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("member");
 		
-		vo.setMid(request.getParameter("mid"));
-		vo.setMpw(request.getParameter("mpw"));
-		vo.setMname(request.getParameter("mname"));
+		vo.setMid(mvo.getMid()); // í˜„ì¬ ì ‘ì†í•œ ë©¤ë²„ id
+		vo.setMpw(request.getParameter("mpw")); // ìˆ˜ì •í•  ë¹„ë°€ë²ˆí˜¸
+		vo.setNickname(request.getParameter("mnickname")); // ìˆ˜ì •í•  ë‹‰ë„¤ì„
 
-		if(dao.update_M(vo)) {
+		if(dao.update_MY(vo)) { // ë©¤ë²„ ì •ë³´ ìˆ˜ì •
 			session.invalidate();
 			forward = new ActionForward();
 			forward.setPath("main.do");
 			forward.setRedirect(true);
 		}
 		else {
-			throw new Exception("updateM ¿À·ù");
+			throw new Exception("updateM ì˜¤ë¥˜");
 		}
 		
 		return forward;
@@ -39,12 +41,12 @@ public class UpdateMAction implements Action{
 /*
 		else if(action.equals("memberUpdate")){
 			if(mDAO.update(mVO)){
-				session.invalidate(); // ¼¼¼Ç Á¤º¸ ÀüÃ¼ Á¦°ÅÇÏ±â
-				// session.removeAttribute("member"); ÀÏÁ¤ Á¤º¸ Å¸°ÙÇÏ¿© »èÁ¦µµ °¡´É
+				session.invalidate(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+				// session.removeAttribute("member"); ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				response.sendRedirect("login.jsp");
 			}
 			else {
-				throw new Exception("memberUpdate ¿À·ù");
+				throw new Exception("memberUpdate ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 */

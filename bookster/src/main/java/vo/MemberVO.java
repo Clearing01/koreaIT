@@ -9,9 +9,17 @@ public class MemberVO {
 	private String memail;
 	private String role;
 	private int report;
+	private int cnt; // 관리자에서 회원 전체 뽑을 시 페이징을 위한 임시 변수
+	
 	
 	
 
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getReport() {
 		return report;
 	}
@@ -63,7 +71,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", nickname=" + nickname + ", mphone="
-				+ mphone + ", memail=" + memail + ", role=" + role + ", report=" + report + "]";
+				+ mphone + ", memail=" + memail + ", role=" + role + ", report=" + report + ", cnt=" + cnt + "]";
 	}
 	
 	

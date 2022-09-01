@@ -76,7 +76,7 @@
 								<i class="fa-solid fa-unicorn"></i>
 							</div> 공지사항 등록하기
 						</a>
-						</a> <a class="nav-link" href="admindetail.jsp">
+						</a> <a class="nav-link" href="adminBoard.jsp">
 							<div class="sb-nav-link-icon">
 								<i class="fa-solid fa-unicorn"></i>
 							</div> 회원관리

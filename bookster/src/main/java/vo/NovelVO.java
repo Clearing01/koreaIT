@@ -33,6 +33,7 @@ public class NovelVO {
 	public void setSearchContent(String searchContent) {
 		this.searchContent = searchContent;
 	}
+
 	public int getNcnt() {
 		return ncnt;
 	}

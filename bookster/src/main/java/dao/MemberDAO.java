@@ -1,42 +1,44 @@
 package dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import util.JDBCUtil;
-import vo.LlikeVO;
 import vo.MemberVO;
 
 public class MemberDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectOne_M="SELECT * FROM MEMBER WHERE MID=? AND MPW=?"; // 로그인 로직
-	final String sql_selectOne_MID="SELECT * FROM MEMBER WHERE MID=?"; // 마이페이지 // 비밀번호 찾기
-	final String sql_selectAll_M="SELECT * FROM MEMBER"; // 관리자에서 필요
-	final String sql_selectAll_ST="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
-	final String sql_selectAll_NL="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
-	final String sql_selectAll_RP="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON MEMBER.MID=LLIKE.MID WHERE MID=?";
-	// 신고/추천/비추천을 가리기위한 SELECTALL
+	final String sql_selectOne_LOGIN="SELECT * FROM MEMBER WHERE MID=? AND MPW=?"; 
+	// 로그인 로직
+	final String sql_selectOne_MID="SELECT * FROM MEMBER WHERE MID=?"; 
+	// 마이페이지 // 비밀번호 찾기
+	final String sql_selectAll_MEMBER="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM MEMBER ORDER BY MID DESC) A WHERE ROWNUM < = ?+19)WHERE RNUM  > = ?"; // 관리자에서 필요
+	
+	
 	final String sql_insert_M="INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?)";
-	final String sql_update_M="UPDATE MEMBER SET MPW=?, NICKNAME=? WHERE MID=?";
-	final String sql_update2_M="UPDATE MEMBER SET MPW=? WHERE MID='lisa'";
-	final String sql_update_ADMIN="UPDATE MEMBER SET ROLE=? WHERE MID=?"; // 멤버의 계정권한 업데이트
+	// 회원가입
+	final String sql_update_MY="UPDATE MEMBER SET MPW=?, NICKNAME=? WHERE MID=?"; 
+	// 회원정보수정
+	final String sql_update_MPW="UPDATE MEMBER SET MPW=? WHERE MID=?"; 
+	// 비밀번호 수정
+	final String sql_update_ADMIN="UPDATE MEMBER SET ROLE=? WHERE MID=?"; 
+	// 멤버의 계정권한 업데이트
 	final String sql_delete_M="DELETE FROM MEMBER WHERE MID=? AND MPW=?";
+	// 회원탈퇴
 
-	// 관리자 페이지에서 사용할 것 selectAll_ST = 추천 selectAll_NL = 비추천 selectAll_RP = 신고
-
-	public boolean update2_M(MemberVO mvo) { //회원비밀번호 수정
+	public boolean update_MPW(MemberVO mvo) { //회원비밀번호 수정
 	      conn = JDBCUtil.connect();
 	      try {
-	         pstmt = conn.prepareStatement(sql_update2_M); 
+	         pstmt = conn.prepareStatement(sql_update_MPW); 
 	         pstmt.setString(1, mvo.getMpw());
 	     //   pstmt.setString(2, mvo.getMid());
 	         int res = pstmt.executeUpdate();
 	         if (res == 0) {
-	            System.out.println("로그 : update2 실패");
+	            System.out.println("로그 : update_MPW 실패");
 	            return false;
 	         }
 	      } catch (SQLException e) {
@@ -49,98 +51,6 @@ public class MemberDAO {
 	      return true;
 	   }
 
-	public ArrayList<MemberVO> selectAll_ST(MemberVO mvo) {
-		ArrayList<MemberVO> datas = new ArrayList<MemberVO>();
-		conn = JDBCUtil.connect();
-		try {
-			pstmt = conn.prepareStatement(sql_selectAll_ST); // 추천
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MemberVO data = new MemberVO();
-				data.setMid(rs.getString("MID"));
-				data.setMpw(rs.getString("MPW"));
-				data.setMname(rs.getString("MNAME"));
-				data.setMphone(rs.getString("MPHONE"));
-				data.setMemail(rs.getString("MEMAIL"));
-				data.setRole(rs.getString("ROLE"));
-				if(rs.getString("NICKNAME")==null) {
-					data.setMid("[이름없음]");
-				}else {
-					data.setMid(rs.getString("NICKNAME"));
-				}
-				datas.add(data);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return datas;
-	}
-	public ArrayList<MemberVO> selectAll_NL(MemberVO mvo) {
-		ArrayList<MemberVO> datas = new ArrayList<MemberVO>();
-
-		conn = JDBCUtil.connect();
-		try {
-			pstmt = conn.prepareStatement(sql_selectAll_NL); // 비추천
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MemberVO data = new MemberVO();
-				data.setMid(rs.getString("MID"));
-				data.setMpw(rs.getString("MPW"));
-				data.setMname(rs.getString("MNAME"));
-				data.setMphone(rs.getString("MPHONE"));
-				data.setMemail(rs.getString("MEMAIL"));
-				data.setRole(rs.getString("ROLE"));
-				if(rs.getString("NICKNAME")==null) {
-					data.setMid("[이름없음]");
-				}else {
-					data.setMid(rs.getString("NICKNAME"));
-				}
-				datas.add(data);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return datas;
-	}
-	public ArrayList<MemberVO> selectAll_RP(MemberVO mvo) {
-		ArrayList<MemberVO> datas = new ArrayList<MemberVO>();
-		conn = JDBCUtil.connect();
-		try {
-			pstmt = conn.prepareStatement(sql_selectAll_RP);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MemberVO data = new MemberVO();
-				data.setMid(rs.getString("MID"));
-				data.setMpw(rs.getString("MPW"));
-				data.setMname(rs.getString("MNAME"));
-				data.setMphone(rs.getString("MPHONE"));
-				data.setMemail(rs.getString("MEMAIL"));
-				data.setRole(rs.getString("ROLE"));
-				data.setReport(rs.getInt("REPORT"));
-				if(rs.getString("NICKNAME")==null) {
-					data.setMid("[이름없음]");
-				}else {
-					data.setMid(rs.getString("NICKNAME"));
-				}
-				datas.add(data);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return datas;
-	}
 
 	public boolean insert_M(MemberVO mvo) { //회원가입
 		conn = JDBCUtil.connect();
@@ -165,10 +75,10 @@ public class MemberDAO {
 
 	}
 
-	public boolean update_M(MemberVO mvo) { //회원정보수정
+	public boolean update_MY(MemberVO mvo) { //회원정보수정
 		conn = JDBCUtil.connect();
 		try {
-			pstmt = conn.prepareStatement(sql_update_M); 
+			pstmt = conn.prepareStatement(sql_update_MY); 
 			pstmt.setString(1, mvo.getMpw());
 			pstmt.setString(2, mvo.getMname());
 			pstmt.setString(3, mvo.getMid());
@@ -227,11 +137,11 @@ public class MemberDAO {
 		return true;
 	}
 
-	public MemberVO selectOne_MID(MemberVO mvo) { //로그인
+	public MemberVO selectOne_MID(MemberVO mvo) { //마이페이지/ 비밀번호 찾기에 사용
 		conn = JDBCUtil.connect();
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement(sql_selectOne_M);
+			pstmt = conn.prepareStatement(sql_selectOne_MID);
 			pstmt.setString(1, mvo.getMid());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -261,11 +171,11 @@ public class MemberDAO {
 			JDBCUtil.disconnect(pstmt, conn);
 		}
 	}
-	public MemberVO selectOne_M(MemberVO mvo) { //로그인
+	public MemberVO selectOne_LOGIN(MemberVO mvo) { //로그인에 사용
 		conn = JDBCUtil.connect();
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement(sql_selectOne_M);
+			pstmt = conn.prepareStatement(sql_selectOne_LOGIN);
 			pstmt.setString(1, mvo.getMid());
 			pstmt.setString(2, mvo.getMpw());
 			rs = pstmt.executeQuery();
@@ -297,11 +207,13 @@ public class MemberDAO {
 		}
 	}
 
-	public ArrayList<MemberVO> selectAll_M(MemberVO mvo) {
+	public ArrayList<MemberVO> selectAll_MEMBER(MemberVO mvo) { // 관리자에서 사용할 전체 회원목록
 		ArrayList<MemberVO> datas = new ArrayList<MemberVO>();
 		conn = JDBCUtil.connect();
 		try {
-			pstmt = conn.prepareStatement(sql_selectAll_M);
+			pstmt = conn.prepareStatement(sql_selectAll_MEMBER);
+			pstmt.setInt(1, mvo.getCnt());
+			pstmt.setInt(2, mvo.getCnt());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MemberVO data = new MemberVO();

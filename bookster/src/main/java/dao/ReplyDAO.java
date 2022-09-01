@@ -12,11 +12,11 @@ import vo.ReplyVO;
 public class ReplyDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectOne_R="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.NICKNAME WHERE RID=?";
-	final String sql_selectAll_R="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.NICKNAME ORDER BY RID DESC";
+	final String sql_selectOne_R="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHERE RID=?";
+	final String sql_selectAll_R="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID ORDER BY RID DESC";
 	// SQL 에서 변경했던 SELECTALL을 그대로 복사하여 기존에 검색하는 SELECTALL에 추가하였다.
 	
-	final String sql_insert_R="INSERT INTO REPLY VALUES((SELECT NVL(MAX(RID),3000)+1 FROM REPLY),?,TO_DATE(sysdate,'yyyy.mm.dd hh24:mi'),?,?,?)";
+	final String sql_insert_R="INSERT INTO REPLY VALUES((SELECT NVL(MAX(RID),3000)+1 FROM REPLY),?,TO_DATE(sysdate,'yyyy.mm.dd hh24:mi'),?,?)";
 		// INSERT INTO BOARD VALUES((서브쿼리),?,?,?)
 	final String sql_update_R="UPDATE REPLY SET CONTENT=? WHERE RID=?";
 	final String sql_delete_R="DELETE FROM REPLY WHERE RID=?";
@@ -86,8 +86,7 @@ public class ReplyDAO {
 			pstmt=conn.prepareStatement(sql_insert_R);
 			pstmt.setString(1, rvo.getRcontent());
 			pstmt.setString(2, rvo.getMid());
-			pstmt.setInt(3, rvo.getLid());
-			pstmt.setInt(4, rvo.getBid());
+			pstmt.setInt(3, rvo.getBid());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
