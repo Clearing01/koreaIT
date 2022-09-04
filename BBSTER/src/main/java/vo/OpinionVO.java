@@ -3,11 +3,33 @@ package vo;
 public class OpinionVO {
 	
 	private int oid;
+	private int nid;
 	private String ocontent;
-	private String odate;
 	private String mid;
-	private int lid;
+	private String odate;
 	private int ostar;
+	private String title; // novel과 조인 후 어느 리뷰에 작성했는지 확인하기 위한 임시변수
+	private int cnt; // 페이징처리를 위한 cnt
+	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getNid() {
+		return nid;
+	}
+	public void setNid(int nid) {
+		this.nid = nid;
+	}
 	public int getOid() {
 		return oid;
 	}
@@ -32,12 +54,7 @@ public class OpinionVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public int getLid() {
-		return lid;
-	}
-	public void setLid(int lid) {
-		this.lid = lid;
-	}
+
 	public int getOstar() {
 		return ostar;
 	}
@@ -46,8 +63,8 @@ public class OpinionVO {
 	}
 	@Override
 	public String toString() {
-		return "OpinionVO [oid=" + oid + ", ocontent=" + ocontent + ", odate=" + odate + ", mid=" + mid + ", lid=" + lid
-				+ ", ostar=" + ostar + "]";
+		return "OpinionVO [oid=" + oid + ", ocontent=" + ocontent + ", odate=" + odate + ", mid=" + mid + ", nid=" + nid
+				+ ", ostar=" + ostar + ", title=" + title + ", cnt=" + cnt + "]";
 	}
 	
 	

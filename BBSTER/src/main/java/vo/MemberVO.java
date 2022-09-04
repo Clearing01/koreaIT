@@ -8,22 +8,14 @@ public class MemberVO {
 	private String mphone;
 	private String memail;
 	private String role;
-	private int lstatus;  
-	private int nlstatus;
-	private int report;
-	
-	
-	public int getLstatus() {
-		return lstatus;
+	private int report; // 신고를 뽑기 위한 변수
+	private int cnt; // 관리자에서 회원 전체 뽑을 시 페이징을 위한 임시 변수
+
+	public int getCnt() {
+		return cnt;
 	}
-	public void setLstatus(int lstatus) {
-		this.lstatus = lstatus;
-	}
-	public int getNlstatus() {
-		return nlstatus;
-	}
-	public void setNlstatus(int nlstatus) {
-		this.nlstatus = nlstatus;
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	public int getReport() {
 		return report;
@@ -76,7 +68,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", nickname=" + nickname + ", mphone="
-				+ mphone + ", memail=" + memail + ", role=" + role + "]";
+				+ mphone + ", memail=" + memail + ", role=" + role + ", report=" + report + ", cnt=" + cnt + "]";
 	}
 	
 	

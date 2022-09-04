@@ -21,193 +21,54 @@
 	<!-- CSS files -->
 	<link rel="stylesheet" href="css/plugins.css">
 	<link rel="stylesheet" href="css/style.css">
-
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/super-build/ckeditor.js"></script>
+<style>
+  .ck-editor__editable { height: 500px; }
+</style>
 </head>
 <body>
 <!-- header section-->
 <bb:header/>
 <!-- end of header section-->
 
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-					<h1> blog listing - grid</h1>
-					<ul class="breadcumb">
-						<li class="active"><a href="#">Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span> blog listing</li>
-					</ul>
+<div class="buster-light">
+  
+	<div class="page-single">
+		<div class="container">
+		<div style="margin:2%; margin-left:0%;">
+		<h2>커뮤니티 글 작성하기</h2>
+		<div style="margin-top:1%;">!음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다. </div>
+		</div>
+			<form action="InsertB" method="post" enctype="multipart/form-data">
+				<input type="text" name="btitle" placeholder="제목을 입력해주세요">
+				  <textarea name="bcontent" id="editor" style="height: 500px;">
+				  </textarea>
+				 <input type="file" name="bimg" placeholder="제목을 입력해주세요" onchange="loadFile(this)">
+				 <img alt="미리보기" id="preview" />
+				  
+				  <input type="submit" value="작성 완료" style="float:right; margin-top:0.5%;">
+				  <button id="cancel" style="font-size:15px; float : right; margin-top:0.5%; margin-right:2%;">취소</button>
+			</form>
+				  </div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-		<div class="buster-light">
-<!-- blog grid section-->
-<div class="page-single">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-9 col-sm-12 col-xs-12">
-				<div class="row">
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv21.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Godzilla: King Of The Monsters Adds O’Shea Jackson Jr</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>Looks like Kong: Skull Island started a tradition with its casting of Straight ...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv22.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">First Official Images of Alicia Vikander As Tomb Raider’s Lara Croft</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>Aside from the her digital incarnation, the most recognisable image of Tomb ...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv23.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">The Boss Baby Holds On At The Top US Box Office</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>He might be a primary protector of New York City, but at heart, Peter Parker is ...</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv24.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Stephen King and Owen King's Novel Sleeping Beauties Being</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>It's starting to feel like the seventies and eighties all over again, with ...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv29.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Pablo Larrain Directing Tom Hardy In The True American</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>Back in 2014, it looked like Tom Hardy would be starring for Kathryn...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blog29.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Michael Keaton Looking To Play A Villain In Dumbo</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>Michael Keaton and Tim Burton haven't collaborated since Batman Returns, but .</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blog27.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Sam Mendes In Talks To Develop Graphic Novel </a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>We already know that Shailene Woodley and Miles Teller have chemistry of ...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blog26.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">Eric Roth To Write Dune For Denis Villeneuve</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>Though the idea of tackling Frank Herbert's imposing Dune books might send a ...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12">
-						<div class="blog-item-style-2">
-							<a href="blogdetail.html"><img src="images/uploads/blogv25.jpg" alt=""></a>
-							<div class="blog-it-infor">
-								<h3><a href="blogdetail.html">John Simm Returning To Doctor Who As The Master</a></h3>
-								<span class="time">27 Mar 2017</span>
-								<p>John Simm's cackling, lunatic regeneration of The Master hasn't been seen on...</p>
-							</div>
-						</div>
-					</div>
-				</div>
-            	<ul class="pagination">
-            		<li class="icon-prev"><a href="#"><i class="ion-ios-arrow-left"></i></a></li>
-            		<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">...</a></li>
-					<li><a href="#">21</a></li>
-					<li><a href="#">22</a></li>
-					<li class="icon-next"><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
-            	</ul>
-			</div>
-			<div class="col-md-3 col-sm-12 col-xs-12">
-				<div class="sidebar">
-					<div class="sb-search sb-it">
-						<h4 class="sb-title">Search</h4>
-						<input type="text" placeholder="Enter keywords">
-					</div>
-					<div class="sb-cate sb-it">
-						<h4 class="sb-title">Categories</h4>
-						<ul>
-							<li><a href="#">Awards (50)</a></li>
-							<li><a href="#">Box office (38)</a></li>
-							<li><a href="#">Film reviews (72)</a></li>
-							<li><a href="#">News (45)</a></li>
-							<li><a href="#">Global (06)</a></li>
-						</ul>
-					</div>
-					<div class="sb-recentpost sb-it">
-						<h4 class="sb-title">most popular</h4>
-						<div class="recent-item">
-							<span>01</span><h6><a href="#">Korea Box Office: Beauty and the Beast Wins Fourth</a></h6>
-						</div>
-						<div class="recent-item">
-							<span>02</span><h6><a href="#">Homeland Finale Includes Shocking Death </a></h6>
-						</div>
-						<div class="recent-item">
-							<span>03</span><h6><a href="#">Fate of the Furious Reviews What the Critics Saying</a></h6>
-						</div>
-					</div>
-					<div class="sb-tags sb-it">
-						<h4 class="sb-title">tags</h4>
-						<ul class="tag-items">
-							<li><a href="#">Batman</a></li>
-							<li><a href="#">film</a></li>
-							<li><a href="#">homeland</a></li>
-							<li><a href="#">Fast & Furious</a></li>
-							<li><a href="#">Dead Walker</a></li>
-							<li><a href="#">King</a></li>
-							<li><a href="#">Beauty</a></li>
-						</ul>
-					</div>
-					<div class="ads">
-						<img src="images/uploads/ads1.png" alt="">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!--end of  blog grid section-->
-		</div>
-
+		<script type="text/javascript">
+	function loadFile(input){
+		// 여러개의 이미지를 읽을수도 있기 때문에 
+		if(input.files && input.files[0]){
+			var fr = new FileReader();
+			//파일리더로 일고 읽는게 완료되면  만들어준 아이디에 속성값을 지정하여 사용하겠다.
+			fr.onload=function(event){
+				document.getElementById('preview').src=event.target.result;
+			};
+			fr.readAsDataURL(input.files[0]);
+			// 이미지파일을 읽어 온다.
+		}
+		else{
+			document.getElementById('preview').src="";
+		}
+	}
+</script>
 <!-- footer section-->
 <bb:footer/>
 <!-- end of footer section-->
@@ -215,5 +76,291 @@
 <script src="js/plugins.js"></script>
 <script src="js/plugins2.js"></script>
 <script src="js/custom.js"></script>
+<!-- ckEditor 플러그인 추가 -->
+<!--  <script>
+            // This sample still does not showcase all CKEditor 5 features (!)
+            // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
+            CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+                toolbar: {
+                    items: [
+                        'exportPDF','exportWord', '|',
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'textPartLanguage', '|',
+                        'sourceEditing'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                // Changing the language of the interface requires loading the language file using the <script> tag.
+                // language: 'es',
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+                placeholder: '소설에 대한 스포일러는 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다.',
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+                // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                // Be careful with enabling previews
+                // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: [
+                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                '@sugar', '@sweet', '@topping', '@wafer'
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ]
+                },
+                // The "super-build" contains more premium features that require additional configuration, disable them below.
+                // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                removePlugins: [
+                    // These two are commercial, but you can try them out without registering to a trial.
+                    // 'ExportPdf',
+                    // 'ExportWord',
+                    'CKBox',
+                    'CKFinder',
+                    'EasyImage',
+                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                    // Storing images as Base64 is usually a very bad idea.
+                    // Replace it on production website with other solutions:
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                    // 'Base64UploadAdapter',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                    // from a local file system (file://) - load this site via HTTP server if you enable MathType
+                    'MathType'
+                ]
+            });
+
+              CKEDITOR.ClassicEditor.create(document.getElementById("editor1"), {
+                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+                toolbar: {
+                    items: [
+                        'exportPDF','exportWord', '|',
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'textPartLanguage', '|',
+                        'sourceEditing'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                // Changing the language of the interface requires loading the language file using the <script> tag.
+                // language: 'es',
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+                placeholder: '관리자 공지사항을 등록해주세요.',
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+                // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                // Be careful with enabling previews
+                // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: [
+                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                '@sugar', '@sweet', '@topping', '@wafer'
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ]
+                },
+                // The "super-build" contains more premium features that require additional configuration, disable them below.
+                // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                removePlugins: [
+                    // These two are commercial, but you can try them out without registering to a trial.
+                    // 'ExportPdf',
+                    // 'ExportWord',
+                    'CKBox',
+                    'CKFinder',
+                    'EasyImage',
+                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                    // Storing images as Base64 is usually a very bad idea.
+                    // Replace it on production website with other solutions:
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                    // 'Base64UploadAdapter',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                    // from a local file system (file://) - load this site via HTTP server if you enable MathType
+                    'MathType'
+                ]
+            });
+</script> --> 
 </body>
 </html>

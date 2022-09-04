@@ -13,16 +13,17 @@ public class DeleteMAction implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session=request.getSession();
 
 		ActionForward forward = null;
 		MemberVO vo = new MemberVO();
 		MemberDAO dao = new MemberDAO();
 
-
-		vo.setMid(request.getParameter("mid"));
-		vo.setMpw(request.getParameter("mpw"));
-		vo = dao.selectOne_M(vo);
+		HttpSession session=request.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("member"); // ì ‘ì†í•œ ë©¤ë²„
+		
+		vo.setMid(mvo.getMid()); // ì ‘ì†í•œ ë©¤ë²„ì˜ id
+		vo.setMpw(request.getParameter("mpw")); // ì…ë ¥ë°›ì€ pw
+		vo = dao.selectOne_LOGIN(vo);
 
 		if(vo != null) {
 				dao.delete_M(vo);
@@ -32,7 +33,7 @@ public class DeleteMAction implements Action{
 				forward.setRedirect(true);
 			}
 			else {
-				throw new Exception("deleteM ¿À·ù");
+				throw new Exception("deleteM ì˜¤ë¥˜");
 			}
 		return forward;
 	}
@@ -44,11 +45,11 @@ public class DeleteMAction implements Action{
 			if(member!=null && mDAO.delete(member)){
 			//	bVO.setWriter(member.getMname());
 			//	bDAO.delete_all(bVO);
-				session.invalidate(); // ¼¼¼Ç Á¤º¸ ÀüÃ¼ Á¦°ÅÇÏ±â
+				session.invalidate(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				response.sendRedirect("login.jsp");
 			}
 			else {
-				throw new Exception("memberdelete ¿À·ù");
+				throw new Exception("memberdelete ï¿½ï¿½ï¿½ï¿½");
 			}
 		}	
  */

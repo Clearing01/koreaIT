@@ -14,266 +14,613 @@ import vo.ReplyVO;
 import vo.Reply_reVO;
 
 public class BoardDAO {
-	Connection conn;
-	PreparedStatement pstmt;
-    final String sql_selectAll_BoardSearch="SELECT * FROM BOARD WHERE MID LIKE '%'||?||'%' AND BCONTENT LIKE '%'||?||'%' AND BTITLE LIKE '%'||?||'%' ORDER BY BID DESC";
-    							// ∞‘Ω√±€ ∞Àªˆ
-	final String sql_selectOne_BoardOne="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID WHERE MID=?";
-								// ∞‘Ω√±€ «œ≥™∏∏ ªÃ¥¬ ∞Õ
-	final String sql_selectAll_BoardAll="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID ORDER BY BID DESC";
-								// ∞‘Ω√±€ ¿¸√º ªÃ¥¬ ∞Õ
-	final String sql_selectAll_BoardAll_ADMIN="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID ORDER BY BID DESC WHERE MEMBER.MID=?";
-								// ∞‘Ω√±€ ¿¸√º ªÃ¥¬ ∞Õ = ≥ª∞° æ¥ ∞‘Ω√±€ 
-	final String sql_selectOne_ReplyOne="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHRER MID=?";
-								// ¥Ò±€ «œ≥™∏∏ ªÃ¥¬ ∞Õ
-	final String sql_selectAll_ReplyAll="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID ORDER BY RID DESC WHERE BOARD.MID=?";
-								// ¥Ò±€ ¿¸√º ªÃ¥¬ ∞Õ = ≥ª∞° æ¥ ¥Ò±€ ¿¸√º
-	final String sql_selectAll_ReplyAll_Board="SELECT * FROM REPLY LEFT OUTER JOIN BOARD ON REPLY.BID=BOARD.BID ORDER BY RID DESC";
-								// «ÿ¥Á ∞‘Ω√±€¿« ¥Ò±€∏∏ ªÃ¥¬ ∞Õ = ∞‘Ω√±€ø° ∏¬¥¬ ¥Ò±€
-	final String sql_selectAll_Reply_re="SELECT * FROM REPLY_RE LEFT OUTER JOIN REPLY ON REPLY_RE.RID=REPLY.RID ORDER BY RRID DESC";
-								// ¥Î¥Ò±€ ¿¸√º √‚∑¬ = «ÿ¥Á ¥Ò±€∞˙ ∏¬¥¬ ¥Î¥Ò±€
-	
-	final String sql_insert_B="INSERT INTO BOARD VALUES((SELECT NVL(MAX(BID),1000)+1 FROM BOARD),?,?,TO_DATE(sysdate,'yyyy.mm.dd hh24:mi'),?,?)";
-	final String sql_update_B="UPDATE BOARD SET TITLE=?,CONTENT=? WHERE BID=?";
-	final String sql_delete_B="DELETE FROM BOARD WHERE BID=?";
+   Connection conn;
+   PreparedStatement pstmt;
+   final String sql_selectAll_BTITLE="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.BTITLE LIKE '%'||?||'%' ORDER BY BID DESC)A WHERE ROWNUM < = ?+19)WHERE RNUM  > = ?";
+   final String sql_selectAll_BCONTENT="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.BCONTENT LIKE '%'||?||'%' ORDER BY BID DESC)A WHERE ROWNUM < = ?+19)WHERE RNUM  > = ?";
+   final String sql_selectAll_WRITER="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.MID LIKE '%'||?||'%' ORDER BY BID DESC)A WHERE ROWNUM < = ?+19)WHERE RNUM  > = ?";
+   final String sql_selectAll_BoardAll="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID ORDER BY BID DESC) A WHERE ROWNUM < = ?+4)WHERE RNUM  > = ?";
+   // Í≤åÏãúÍ∏Ä Í≤ÄÏÉâ
+   // Í≤åÏãúÍ∏Ä Ï†ÑÏ≤¥ ÎΩëÎäî Í≤É
+   
+   final String sql_selectAll_BTITLE_ALL="SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.BTITLE LIKE '%'||?||'%' ORDER BY BID DESC";
+   final String sql_selectAll_BCONTENT_ALL="SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.BCONTENT LIKE '%'||?||'%' ORDER BY BID DESC";
+   final String sql_selectAll_WRITER_ALL="SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID WHERE B.MID LIKE '%'||?||'%' ORDER BY BID DESC";
+   final String sql_selectAll_BoardAll_ALL="SELECT * FROM BOARD B JOIN MEMBER M ON B.MID=M.MID ORDER BY BID DESC";
+
+   
+   //========================================================================================================================================================
+
+   final String sql_selectOne_BoardOne="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID WHERE BOARD.BID=?";
+   // Í≤åÏãúÍ∏Ä ÌïòÎÇòÎßå ÎΩëÎäî Í≤É
+   //========================================================================================================================================================
+
+   final String sql_selectAll_BoardAll_ADMIN="SELECT * FROM BOARD LEFT OUTER JOIN MEMBER ON BOARD.MID=MEMBER.MID WHERE MEMBER.MID=? ORDER BY BID DESC";
+   // Í≤åÏãúÍ∏Ä Ï†ÑÏ≤¥ ÎΩëÎäî Í≤É = ÎÇ¥Í∞Ä Ïì¥ Í≤åÏãúÍ∏Ä 
+   //========================================================================================================================================================
+
+   final String sql_selectOne_ReplyOne="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHRER REPLY.RID=?";
+   // ÎåìÍ∏Ä ÌïòÎÇòÎßå ÎΩëÎäî Í≤É
+   final String sql_selectAll_ReplyAll="SELECT * FROM REPLY LEFT OUTER JOIN MEMBER ON REPLY.MID=MEMBER.MID WHERE REPLY.MID=? ORDER BY RID DESC ";
+   // ÎåìÍ∏Ä Ï†ÑÏ≤¥ ÎΩëÎäî Í≤É = ÎÇ¥Í∞Ä Ïì¥ ÎåìÍ∏Ä Ï†ÑÏ≤¥
+   final String sql_selectAll_ReplyAll_paging="SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM REPLY LEFT OUTER JOIN BOARD ON REPLY.BID=BOARD.BID WHERE REPLY.BID=? ORDER BY RID DESC) A WHERE ROWNUM < = ?+4)WHERE RNUM  > = ? ";
+   // Ìï¥Îãπ Í≤åÏãúÍ∏ÄÏùò ÎåìÍ∏ÄÎßå ÌéòÏù¥Ïßï Ï≤òÎ¶¨Ìï¥ÏÑú ÎΩëÎäî Í≤É
+   final String sql_selectAll_ReplyAll_All="SELECT * FROM REPLY LEFT OUTER JOIN BOARD ON REPLY.BID=BOARD.BID WHERE REPLY.BID=? ORDER BY RID DESC ";
+   // Ìï¥Îãπ Í≤åÏãúÍ∏ÄÏùò ÎåìÍ∏ÄÎßå ÎΩëÎäî Í≤É = Í≤åÏãúÍ∏ÄÏóê ÎßûÎäî ÎåìÍ∏Ä
+   final String sql_selectAll_Reply_re_paging="SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM REPLY_RE LEFT OUTER JOIN REPLY ON REPLY_RE.RID=REPLY.RID WHERE REPLY_RE.RID=? ORDER BY REPLY_RE.RRID DESC) A WHERE ROWNUM < = ?+4";
+   // ÎåÄÎåìÍ∏Ä Ï†ÑÏ≤¥ Ï∂úÎ†• = Ìï¥Îãπ ÎåìÍ∏ÄÍ≥º ÎßûÎäî ÎåÄÎåìÍ∏ÄÏùÑ ÌéòÏù¥Ïßï Ï≤òÎ¶¨Ìï¥ÏÑú ÎΩëÎäîÍ≤É  
+   final String sql_selectAll_Reply_re="SELECT * FROM REPLY_RE LEFT OUTER JOIN REPLY ON REPLY_RE.RID=REPLY.RID WHERE REPLY_RE.RID=? ORDER BY RRID DESC ";
+   // ÎåÄÎåìÍ∏Ä Ï†ÑÏ≤¥ Ï∂úÎ†• = Ìï¥Îãπ ÎåìÍ∏ÄÍ≥º ÎßûÎäî ÎåÄÎåìÍ∏Ä  
+
+   final String sql_insert_B="INSERT INTO BOARD VALUES((SELECT NVL(MAX(BID),1000)+1 FROM BOARD),?,?,TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI'),?,?)";
+   final String sql_update_B="UPDATE BOARD SET TITLE=?,CONTENT=? WHERE BID=?";
+   final String sql_delete_B="DELETE FROM BOARD WHERE BID=?";
+   
+   final String sql_selectAll_BOARD_COUNT="SELECT COUNT(*) AS CNT FROM BOARD";
 
 
+   //========================================================================================================================================================
 
-	// ∞‘Ω√±€ ªÛºº ¥©∏£∏È ±◊ æ∆∑° ¥Ò±€ all¿Ã ∫∏ø©æﬂ«œ¥œ±Ó
+   final String sql_selectAll_REPORT="SELECT A.BID, A.CNT, B.MID, B.BTITLE FROM (SELECT L.BID, COUNT(L.REPORT) AS CNT FROM BOARD B JOIN LLIKE L "
+         + "ON B.BID=L.BID WHERE L.REPORT=1 GROUP BY L.BID ORDER BY CNT DESC) A JOIN BOARD B ON A.BID=B.BID";
 
-	
-	public ArrayList<BoardSet> sql_selectAll_BoardAll(BoardVO bvo){
-		ArrayList<BoardSet> datas = new ArrayList<BoardSet>();
-		conn=JDBCUtil.connect();
-		System.out.println("Ω√¿€∑Œ±◊");
-		try {
-			pstmt=conn.prepareStatement(sql_selectAll_BoardAll);
-			ResultSet rs=pstmt.executeQuery();
-			System.out.println("Ω√¿€«—¥Ÿ?!");
-			while(rs.next()) {
-				BoardSet bs = new BoardSet();
-				BoardVO boardVO = new BoardVO();
-				boardVO.setBid(rs.getInt("BID"));
-				boardVO.setBcontent(rs.getString("BCONTENT"));
-				boardVO.setBtitle(rs.getString("BTITLT"));
-				boardVO.setBdate(rs.getString("BDATE"));
-				if(rs.getString("NICKNAME")==null) {
-					boardVO.setMid("[¿Ã∏ßæ¯¿Ω]");
-				} else {
-					// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-					boardVO.setMid(rs.getString("NICKNAME"));
-				}
-				bs.setBoardVO(boardVO);
+   final String sql_selectAll_Lstatus="SELECT A.BID, A.CNT, B.MID, B.BTITLE FROM (SELECT L.BID, COUNT(L.LSTATUS) AS CNT FROM BOARD B JOIN LLIKE L "
+         + "ON B.BID=L.BID WHERE L.LSTATUS=1 GROUP BY L.BID ORDER BY CNT DESC) A JOIN BOARD B ON A.BID=B.BID";
 
-				ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
-				System.out.println("¥Ò±€ all∑Œ±◊");
-				pstmt=conn.prepareStatement(sql_selectAll_ReplyAll);
-				pstmt.setString(1, bvo.getMid());
-				ResultSet rs2 =pstmt.executeQuery();
-				System.out.println("¥Ò±€ all ∑Œ±◊ 2");
-				while(rs2.next()) {
-					ReplyVO rvo = new ReplyVO();
-					ReplySet rSet = new ReplySet();
-					rvo.setRid(rs2.getInt("RID"));
-					rvo.setLid(rs2.getInt("LID"));
-					rvo.setBid(rs2.getInt("BID"));
-					rvo.setRcontent(rs2.getString("RCONTENT"));
-					rvo.setRdate(rs2.getString("RDATE"));
-					if(rs.getString("NICKNAME")==null) {
-						rvo.setMid("[¿Ã∏ßæ¯¿Ω]");
-					} else {
-						// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-						rvo.setMid(rs.getString("NICKNAME"));
-					}
-					rSet.setReplyVO(rvo);
+   final String sql_selectOne_Lstatus="SELECT COUNT(*) AS CNT FROM BOARD B JOIN LLIKE L ON B.BID=L.BID "
+         + "WHERE L.BID=? AND L.LSTATUS=1";
 
+   final String sql_selectOne_NLstatus="SELECT COUNT(*) AS CNT FROM BOARD B JOIN LLIKE L ON B.BID=L.BID "
+         + "WHERE L.BID=? AND L.NLSTATUS=1";
 
-					ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
-					pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
-					ResultSet rs3 = pstmt.executeQuery();
-					while(rs3.next()) {
-						Reply_reVO rrvo = new Reply_reVO();
-						rrvo.setBid(rs3.getInt("BID"));
-						rrvo.setLid(rs3.getInt("LID"));
-						rrvo.setRid(rs3.getInt("RID"));
-						rrvo.setRrcontent(rs3.getString("RRCONTENT"));
-						rrvo.setRrdate(rs3.getString("RRDATE"));
-						rrvo.setRrid(rs3.getInt("RRID"));
-						if(rs.getString("NICKNAME")==null) {
-							rrvo.setMid("[¿Ã∏ßæ¯¿Ω]");
-						} else {
-							// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-							rrvo.setMid(rs.getString("NICKNAME"));
-						}
-						rrList.add(rrvo);		
-					}
-					rSet.setrrList(rrList);
-					replySet.add(rSet);
-					bs.setReplySet(replySet);
+   final String sql_selectOne_Report="SELECT COUNT(*) AS CNT FROM BOARD B JOIN LLIKE L ON B.BID=L.BID "
+         + "WHERE L.BID=? AND L.REPORT=1";
 
-				}
-				datas.add(bs);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return datas;
-	}
-	   public BoardSet sql_selectOne_BoardOne(BoardVO bvo) {
-			conn=JDBCUtil.connect();
-			BoardSet bs = new BoardSet();
-			System.out.println("Ω√¿€∑Œ±◊");
-			try {
-				pstmt=conn.prepareStatement(sql_selectOne_BoardOne);
-				ResultSet rs=pstmt.executeQuery();
-				System.out.println("Ω√¿€«—¥Ÿ?!");
-				while(rs.next()) {
-					BoardVO boardVO = new BoardVO();
-					boardVO.setBid(rs.getInt("BID"));
-					boardVO.setBcontent(rs.getString("BCONTENT"));
-					boardVO.setBtitle(rs.getString("BTITLT"));
-					boardVO.setBdate(rs.getString("BDATE"));
-					if(rs.getString("NICKNAME")==null) {
-						boardVO.setMid("[¿Ã∏ßæ¯¿Ω]");
-					} else {
-						// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-						boardVO.setMid(rs.getString("NICKNAME"));
-					}
-					bs.setBoardVO(boardVO);
-
-					ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
-					System.out.println("¥Ò±€ all∑Œ±◊");
-					pstmt=conn.prepareStatement(sql_selectAll_ReplyAll);
-					pstmt.setString(1, bvo.getMid());
-					ResultSet rs2 =pstmt.executeQuery();
-					System.out.println("¥Ò±€ all ∑Œ±◊ 2");
-					while(rs2.next()) {
-						ReplyVO rvo = new ReplyVO();
-						ReplySet rSet = new ReplySet();
-						rvo.setRid(rs2.getInt("RID"));
-						rvo.setLid(rs2.getInt("LID"));
-						rvo.setBid(rs2.getInt("BID"));
-						rvo.setRcontent(rs2.getString("RCONTENT"));
-						rvo.setRdate(rs2.getString("RDATE"));
-						if(rs.getString("NICKNAME")==null) {
-							rvo.setMid("[¿Ã∏ßæ¯¿Ω]");
-						} else {
-							// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-							rvo.setMid(rs.getString("NICKNAME"));
-						}
-						rSet.setReplyVO(rvo);
+   public BoardVO selectAll_BOARD_COUNT (BoardVO bvo){
+      BoardVO data=new BoardVO();
+      conn=JDBCUtil.connect();
+      try {
+         pstmt=conn.prepareStatement(sql_selectAll_BOARD_COUNT);
+         ResultSet rs=pstmt.executeQuery();
+         while(rs.next()) {
+            data.setBcnt(rs.getInt("CNT")); // Ï†ÑÏ≤¥ Í≤åÏãúÍ∏Ä 
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }      
+      return data;
+   }
+   
+   public int selectOne_cnt (BoardVO bvo){
+      conn=JDBCUtil.connect();
+      int cnt = 0;
+      try {
+         if(bvo.getCnt_l()==1) { // Ìï¥Îãπ Í≤åÏãúÎ¨º Ï∂îÏ≤úÏàò ÌôïÏù∏ 
+            pstmt=conn.prepareStatement(sql_selectOne_Lstatus);            
+            pstmt.setInt(1, bvo.getBid());
+         }
+         if(bvo.getCnt_n()==1) {
+            pstmt=conn.prepareStatement(sql_selectOne_NLstatus);            
+            pstmt.setInt(1, bvo.getBid());
+         }
+         if(bvo.getCnt_r()==1) {
+            pstmt=conn.prepareStatement(sql_selectOne_Report);            
+            pstmt.setInt(1, bvo.getBid());
+         }
+         ResultSet rs=pstmt.executeQuery();
+         if(rs.next()) {
+            cnt = rs.getInt("CNT");
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }      
+      return cnt;
+   }
+   // Í≤åÏãúÍ∏Ä Ï∂îÏ≤ú/Ïã†Í≥† ÎΩëÎäî Í≤É
+   public ArrayList<BoardVO> selectAll_REPORT(BoardVO bvo){
+      ArrayList<BoardVO> datas=new ArrayList<BoardVO>();
+      conn=JDBCUtil.connect();
+      try {
+         pstmt=conn.prepareStatement(sql_selectAll_REPORT);
+         ResultSet rs=pstmt.executeQuery();
+         while(rs.next()) {
+            BoardVO data=new BoardVO();
+            data.setBid(rs.getInt("BID"));
+            data.setMid(rs.getString("MID"));
+            data.setBcnt(rs.getInt("CNT")); // Ïã†Í≥† ÌöüÏàò
+            data.setBtitle(rs.getString("BTITLE"));
+            datas.add(data);
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }      
+      return datas;
+   }
 
 
-						ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
-						pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
-						ResultSet rs3 = pstmt.executeQuery();
-						while(rs3.next()) {
-							Reply_reVO rrvo = new Reply_reVO();
-							rrvo.setBid(rs3.getInt("BID"));
-							rrvo.setLid(rs3.getInt("LID"));
-							rrvo.setRid(rs3.getInt("RID"));
-							rrvo.setRrcontent(rs3.getString("RRCONTENT"));
-							rrvo.setRrdate(rs3.getString("RRDATE"));
-							rrvo.setRrid(rs3.getInt("RRID"));
-							if(rs.getString("NICKNAME")==null) {
-								rrvo.setMid("[¿Ã∏ßæ¯¿Ω]");
-							} else {
-								// WRITER¥ÎΩ≈ MNAME¿ª ¥„æ∆º≠ WRITER∏¶ ªÃ¿∏∏È MNAME¿Ã √‚∑¬µ»¥Ÿ.
-								rrvo.setMid(rs.getString("NICKNAME"));
-							}
-							rrList.add(rrvo);		
-						}
-						rSet.setrrList(rrList);
-						replySet.add(rSet);
-						bs.setReplySet(replySet);
+   public ArrayList<BoardVO> selectAll_Lstatus (BoardVO bvo){
+      ArrayList<BoardVO> datas=new ArrayList<BoardVO>();
+      conn=JDBCUtil.connect();
+      try {
 
-					}
-					
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
-			}
-			return bs;
-	   }
-
-	   public ArrayList<BoardVO> sql_selectAll_BoardSearch(BoardVO bvo){
-		      ArrayList<BoardVO> datas=new ArrayList<BoardVO>();
-		      conn=JDBCUtil.connect();
-		      try {
-		            pstmt=conn.prepareStatement(sql_selectAll_BoardSearch);
-		            pstmt.setString(1, bvo.getMid());
-		            pstmt.setString(2, bvo.getBcontent());
-		            pstmt.setString(3, bvo.getBtitle());
-		            ResultSet rs=pstmt.executeQuery();
-		         while(rs.next()) {
-		        	BoardVO data=new BoardVO();
-					data.setBid(rs.getInt("BID"));
-					data.setBcontent(rs.getString("BCONTENT"));
-					data.setBtitle(rs.getString("BTITLT"));
-					data.setBdate(rs.getString("BDATE"));
-		            datas.add(data);
-		         }
-		      } catch (SQLException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } finally {
-		         JDBCUtil.disconnect(pstmt, conn);
-		      }      
-		      return datas;
-		   }
+         pstmt=conn.prepareStatement(sql_selectAll_Lstatus);
+         ResultSet rs=pstmt.executeQuery();
+         while(rs.next()) {
+            BoardVO data=new BoardVO();
+            data.setBid(rs.getInt("BID"));
+            data.setMid(rs.getString("MID"));
+            data.setBcnt(rs.getInt("CNT")); // Ï¢ãÏïÑÏöî ÌöüÏàò
+            data.setBtitle(rs.getString("BTITLE"));
+            datas.add(data);
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }      
+      return datas;
+   }
 
 
+   public ArrayList<BoardVO> selectAll_MEMBER(BoardVO bvo) { // Í¥ÄÎ¶¨ÏûêÏóêÏÑú ÏÇ¨Ïö©Ìï† Ï†ÑÏ≤¥ ÌöåÏõêÎ™©Î°ù
+      ArrayList<BoardVO> datas = new ArrayList<BoardVO>();
+      conn = JDBCUtil.connect();
+      try {
+         pstmt = conn.prepareStatement(sql_selectAll_BoardAll_ADMIN);
+         pstmt.setString(1, bvo.getMid());
+         ResultSet rs = pstmt.executeQuery();
+         while (rs.next()) {
+            BoardVO data = new BoardVO();
+            data.setBid(rs.getInt("BID"));
+            data.setBcontent(rs.getString("BCONTENT"));
+            data.setBtitle(rs.getString("BTITLT"));
+            data.setBdate(rs.getString("BDATE"));
+            if(rs.getString("NICKNAME")==null) {
+               data.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+            } else {
+               // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+               data.setMid(rs.getString("NICKNAME"));
+            }
+            datas.add(data);
+         }
+         rs.close();
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }
+      return datas;
+   }
 
 
+   //===========Í≤åÏãúÍ∏ÄÏÉÅÏÑ∏ÏóêÏÑú ÏÇ¨Ïö©Ìï† selectOne
+   public BoardSet sql_selectOne_BoardOne(BoardVO bvo) {
+      conn=JDBCUtil.connect();
+      BoardSet bs = new BoardSet();
+//      System.out.println("ÏãúÏûëÎ°úÍ∑∏");
+      try {
+         pstmt=conn.prepareStatement(sql_selectOne_BoardOne);
+         pstmt.setInt(1, bvo.getBid());
+         ResultSet rs=pstmt.executeQuery();
+         System.out.println("Î°úÍ∑∏: selectOne_BoardOne Î≥¥Îìú DAO");
+         if(rs.next()) {
+            BoardVO boardVO = new BoardVO();
+            boardVO.setBid(rs.getInt("BID"));
+            boardVO.setBcontent(rs.getString("BCONTENT"));
+            boardVO.setBtitle(rs.getString("BTITLE"));
+            boardVO.setBdate(rs.getString("BDATE"));
+            boardVO.setBimg(rs.getString("BIMG"));
+//            System.out.println(rs.getString("BIMG"));
+            pstmt=conn.prepareStatement(sql_selectOne_Lstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs4=pstmt.executeQuery();
+            if(rs4.next()) {
+               boardVO.setCnt_l(rs4.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_l(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_NLstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs5=pstmt.executeQuery();
+            if(rs5.next()) {
+               boardVO.setCnt_n(rs5.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_n(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_Report);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs6=pstmt.executeQuery();
+            if(rs6.next()) {
+               boardVO.setCnt_r(rs6.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_r(0);
+            }
+            if(rs.getString("NICKNAME")==null) {
+               boardVO.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+            } else {
+               // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+               boardVO.setMid(rs.getString("NICKNAME"));
+            }
+            bs.setBoardVO(boardVO);
 
-	public boolean insert_B(BoardVO bvo) {
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(sql_insert_B);
-			pstmt.setString(1, bvo.getBtitle());
-			pstmt.setString(2, bvo.getBcontent());
-			pstmt.setString(3, bvo.getMid());
-			pstmt.setInt(4, bvo.getLid());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return true;
-	}
-	public boolean update_B(BoardVO bvo) {
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(sql_update_B);
-			pstmt.setString(1, bvo.getBtitle());
-			pstmt.setString(2, bvo.getBcontent());
-			pstmt.setInt(3,bvo.getBid());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return true;
-	}
-	public boolean delete_B(BoardVO bvo) {
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(sql_delete_B);
-			pstmt.setInt(1,bvo.getBid());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return true;
-	}
+            ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
+            pstmt=conn.prepareStatement(sql_selectAll_ReplyAll_paging);
+            pstmt.setInt(1, bvo.getBid());
+            pstmt.setInt(2, bvo.getBcnt());
+            pstmt.setInt(3, bvo.getBcnt());            
+            ResultSet rs2 =pstmt.executeQuery();
+//            System.out.println("ÎåìÍ∏Ä all Î°úÍ∑∏");
+            while(rs2.next()) {
+//               System.out.println("replyset Î°úÍ∑∏");
+               ReplySet rSet = new ReplySet();
+               ReplyVO rvo = new ReplyVO();
+               rvo.setRid(rs2.getInt("RID"));
+               rvo.setBid(rs2.getInt("BID"));
+               rvo.setRcontent(rs2.getString("RCONTENT"));
+               rvo.setRdate(rs2.getString("RDATE"));
+               if(rs.getString("NICKNAME")==null) {
+                  rvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+               } else {
+                  // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                  rvo.setMid(rs.getString("NICKNAME"));
+               }
+//               System.out.println(rs2.getString("RCONTENT"));
+//               System.out.println(rvo);
+               rSet.setReplyVO(rvo);
+               
 
+               ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
+               pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
+               pstmt.setInt(1, rvo.getRid());
+               ResultSet rs3 = pstmt.executeQuery();
+               while(rs3.next()) {
+            	  Reply_reVO rrvo = new Reply_reVO();
+                  System.out.println("rrList Î°úÍ∑∏");
+                  rrvo.setBid(rs3.getInt("BID"));
+                  rrvo.setRid(rs3.getInt("RID"));
+                  rrvo.setRrcontent(rs3.getString("RRCONTENT"));
+                  rrvo.setRrdate(rs3.getString("RRDATE"));
+                  rrvo.setRrid(rs3.getInt("RRID"));
+                  if(rs.getString("NICKNAME")==null) {
+                     rrvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+                  } else {
+                     // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                     rrvo.setMid(rs.getString("NICKNAME"));
+                  }
+                  rrList.add(rrvo);      
+               }
+               rSet.setrrList(rrList);
+               replySet.add(rSet);
+            }
+            bs.setReplySet(replySet);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return null;
+      }
+      return bs;
+   }
+
+
+   public ArrayList<BoardSet> sql_selectAll_BoardAll(BoardVO bvo){
+      ArrayList<BoardSet> datas = new ArrayList<BoardSet>();
+      conn=JDBCUtil.connect();
+//      System.out.println("ÏãúÏûëÎ°úÍ∑∏");
+      if(bvo.getSearchCondition() == null) {
+         bvo.setSearchCondition("");
+      }
+      try {
+         if(bvo.getSearchCondition().equals("bcontent")) {
+            pstmt=conn.prepareStatement(sql_selectAll_BCONTENT);
+            pstmt.setString(1, bvo.getSearchContent());
+            pstmt.setInt(2, bvo.getBcnt());
+            pstmt.setInt(3, bvo.getBcnt());
+         }
+         else if(bvo.getSearchCondition().equals("btitle")) {
+            pstmt=conn.prepareStatement(sql_selectAll_BTITLE);
+            pstmt.setString(1, bvo.getSearchContent());
+            pstmt.setInt(2, bvo.getBcnt());
+            pstmt.setInt(3, bvo.getBcnt());
+         }
+         else if(bvo.getSearchCondition().equals("mid")) {
+            pstmt=conn.prepareStatement(sql_selectAll_WRITER);
+            pstmt.setString(1, bvo.getSearchContent());
+            pstmt.setInt(2, bvo.getBcnt());
+            pstmt.setInt(3, bvo.getBcnt());
+         }
+         else {
+            pstmt=conn.prepareStatement(sql_selectAll_BoardAll);
+            pstmt.setInt(1, bvo.getBcnt());
+            pstmt.setInt(2, bvo.getBcnt());
+         }
+         
+         ResultSet rs=pstmt.executeQuery();
+//         System.out.println("ÏãúÏûëÌïúÎã§?!");
+         while(rs.next()) {
+            BoardSet bs = new BoardSet();
+            BoardVO boardVO = new BoardVO();
+            boardVO.setBid(rs.getInt("BID"));
+            boardVO.setBtitle(rs.getString("BTITLE"));
+            boardVO.setBcontent(rs.getString("BCONTENT"));
+            boardVO.setBdate(rs.getString("BDATE"));
+            pstmt=conn.prepareStatement(sql_selectOne_Lstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs4=pstmt.executeQuery();
+            if(rs4.next()) {
+               boardVO.setCnt_l(rs4.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_l(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_NLstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs5=pstmt.executeQuery();
+            if(rs5.next()) {
+               boardVO.setCnt_n(rs5.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_n(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_Report);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs6=pstmt.executeQuery();
+            if(rs6.next()) {
+               boardVO.setCnt_r(rs6.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_r(0);
+            }
+            if(rs.getString("NICKNAME")==null) {
+               boardVO.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+            } else {
+               // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+               boardVO.setMid(rs.getString("NICKNAME"));
+            }
+            bs.setBoardVO(boardVO);
+
+            ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
+//            System.out.println("ÎåìÍ∏Ä allÎ°úÍ∑∏");
+            pstmt=conn.prepareStatement(sql_selectAll_ReplyAll);
+            pstmt.setString(1, bvo.getMid());
+            ResultSet rs2 =pstmt.executeQuery();
+            while(rs2.next()) {
+               ReplyVO rvo = new ReplyVO();
+               ReplySet rSet = new ReplySet();
+               rvo.setRid(rs2.getInt("RID"));
+               rvo.setBid(rs2.getInt("BID"));
+               rvo.setRcontent(rs2.getString("RCONTENT"));
+               rvo.setRdate(rs2.getString("RDATE"));
+               if(rs.getString("NICKNAME")==null) {
+                  rvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+               } else {
+                  // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                  rvo.setMid(rs.getString("NICKNAME"));
+               }
+               rSet.setReplyVO(rvo);
+
+
+               ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
+               pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
+               ResultSet rs3 = pstmt.executeQuery();
+               while(rs3.next()) {
+                  Reply_reVO rrvo = new Reply_reVO();
+                  rrvo.setBid(rs3.getInt("BID"));
+                  rrvo.setRid(rs3.getInt("RID"));
+                  rrvo.setRrcontent(rs3.getString("RRCONTENT"));
+                  rrvo.setRrdate(rs3.getString("RRDATE"));
+                  rrvo.setRrid(rs3.getInt("RRID"));
+                  if(rs.getString("NICKNAME")==null) {
+                     rrvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+                  } else {
+                     // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                     rrvo.setMid(rs.getString("NICKNAME"));
+                  }
+                  rrList.add(rrvo);      
+               }
+               rSet.setrrList(rrList);
+               replySet.add(rSet);
+               bs.setReplySet(replySet);
+
+            }
+            datas.add(bs);
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return datas;
+   }
+   public ArrayList<BoardSet> sql_selectAll_BoardAll_All(BoardVO bvo){
+      ArrayList<BoardSet> datas = new ArrayList<BoardSet>();
+      conn=JDBCUtil.connect();
+//      System.out.println("ÏãúÏûëÎ°úÍ∑∏");
+      if(bvo.getSearchCondition() == null) {
+         bvo.setSearchCondition("");
+      }
+      try {
+         if(bvo.getSearchCondition().equals("bcontent")) {
+            pstmt=conn.prepareStatement(sql_selectAll_BCONTENT_ALL);
+            pstmt.setString(1, bvo.getSearchContent());
+         }
+         else if(bvo.getSearchCondition().equals("btitle")) {
+            pstmt=conn.prepareStatement(sql_selectAll_BTITLE_ALL);
+            pstmt.setString(1, bvo.getSearchContent());
+         }
+         else if(bvo.getSearchCondition().equals("mid")) {
+            pstmt=conn.prepareStatement(sql_selectAll_WRITER_ALL);
+            pstmt.setString(1, bvo.getSearchContent());
+         }
+         else {
+            pstmt=conn.prepareStatement(sql_selectAll_BoardAll_ALL);
+         }
+         
+         ResultSet rs=pstmt.executeQuery();
+//         System.out.println("ÏãúÏûëÌïúÎã§?!");
+         while(rs.next()) {
+            BoardSet bs = new BoardSet();
+            BoardVO boardVO = new BoardVO();
+            boardVO.setBid(rs.getInt("BID"));
+            boardVO.setBtitle(rs.getString("BTITLE"));
+            boardVO.setBcontent(rs.getString("BCONTENT"));
+            boardVO.setBdate(rs.getString("BDATE"));
+            pstmt=conn.prepareStatement(sql_selectOne_Lstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs4=pstmt.executeQuery();
+            if(rs4.next()) {
+               boardVO.setCnt_l(rs4.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_l(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_NLstatus);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs5=pstmt.executeQuery();
+            if(rs5.next()) {
+               boardVO.setCnt_n(rs5.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_n(0);
+            }
+            pstmt=conn.prepareStatement(sql_selectOne_Report);
+            pstmt.setInt(1, rs.getInt("BID"));
+            ResultSet rs6=pstmt.executeQuery();
+            if(rs6.next()) {
+               boardVO.setCnt_r(rs6.getInt("CNT"));
+            }
+            else {
+               boardVO.setCnt_r(0);
+            }
+            if(rs.getString("NICKNAME")==null) {
+               boardVO.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+            } else {
+               // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+               boardVO.setMid(rs.getString("NICKNAME"));
+            }
+            bs.setBoardVO(boardVO);
+
+            ArrayList<ReplySet> replySet = new ArrayList<ReplySet>();
+//            System.out.println("ÎåìÍ∏Ä allÎ°úÍ∑∏");
+            pstmt=conn.prepareStatement(sql_selectAll_ReplyAll);
+            pstmt.setString(1, bvo.getMid());
+            ResultSet rs2 =pstmt.executeQuery();
+            while(rs2.next()) {
+               ReplyVO rvo = new ReplyVO();
+               ReplySet rSet = new ReplySet();
+               rvo.setRid(rs2.getInt("RID"));
+               rvo.setBid(rs2.getInt("BID"));
+               rvo.setRcontent(rs2.getString("RCONTENT"));
+               rvo.setRdate(rs2.getString("RDATE"));
+               if(rs.getString("NICKNAME")==null) {
+                  rvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+               } else {
+                  // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                  rvo.setMid(rs.getString("NICKNAME"));
+               }
+               rSet.setReplyVO(rvo);
+
+
+               ArrayList<Reply_reVO> rrList=new ArrayList<Reply_reVO>();
+               pstmt=conn.prepareStatement(sql_selectAll_Reply_re);
+               ResultSet rs3 = pstmt.executeQuery();
+               while(rs3.next()) {
+                  Reply_reVO rrvo = new Reply_reVO();
+                  rrvo.setBid(rs3.getInt("BID"));
+                  rrvo.setRid(rs3.getInt("RID"));
+                  rrvo.setRrcontent(rs3.getString("RRCONTENT"));
+                  rrvo.setRrdate(rs3.getString("RRDATE"));
+                  rrvo.setRrid(rs3.getInt("RRID"));
+                  if(rs.getString("NICKNAME")==null) {
+                     rrvo.setMid("[Ïù¥Î¶ÑÏóÜÏùå]");
+                  } else {
+                     // WRITERÎåÄÏã† MNAMEÏùÑ Îã¥ÏïÑÏÑú WRITERÎ•º ÎΩëÏúºÎ©¥ MNAMEÏù¥ Ï∂úÎ†•ÎêúÎã§.
+                     rrvo.setMid(rs.getString("NICKNAME"));
+                  }
+                  rrList.add(rrvo);      
+               }
+               rs3.close();
+               rSet.setrrList(rrList);
+               replySet.add(rSet);
+               bs.setReplySet(replySet);
+
+            }
+            rs2.close();
+            datas.add(bs);
+         }
+         rs.close();
+         
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return datas;
+   }
+
+
+   public boolean insert_B(BoardVO bvo) {
+      conn=JDBCUtil.connect();
+      try {
+         pstmt=conn.prepareStatement(sql_insert_B);
+         pstmt.setString(1, bvo.getBtitle());
+         pstmt.setString(2, bvo.getBcontent());
+         pstmt.setString(3, bvo.getMid());
+         pstmt.setString(4, bvo.getBimg());
+
+
+         pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }
+      return true;
+   }
+
+
+   public boolean update_B(BoardVO bvo) {
+      conn=JDBCUtil.connect();
+      try {
+         pstmt=conn.prepareStatement(sql_update_B);
+         pstmt.setString(1, bvo.getBtitle());
+         pstmt.setString(2, bvo.getBcontent());
+         pstmt.setInt(3,bvo.getBid());
+         pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }
+      return true;
+   }
+
+
+   public boolean delete_B(BoardVO bvo) {
+      conn=JDBCUtil.connect();
+      try {
+         pstmt=conn.prepareStatement(sql_delete_B);
+         pstmt.setInt(1,bvo.getBid());
+         pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+      } finally {
+         JDBCUtil.disconnect(pstmt, conn);
+      }
+      return true;
+   }
 }

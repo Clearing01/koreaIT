@@ -2,8 +2,10 @@ package ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Reply_reDAO;
+import vo.MemberVO;
 import vo.Reply_reVO;
 
 
@@ -17,18 +19,21 @@ public class InsertRRAction implements Action{
 		Reply_reDAO dao = new Reply_reDAO();
 		Reply_reVO vo = new Reply_reVO();
 		
-		vo.setRrcontent(request.getParameter("content"));
-		vo.setMid(request.getParameter("mid"));
-		vo.setLid(Integer.parseInt(request.getParameter("lid")));
-		vo.setBid(Integer.parseInt(request.getParameter("bid")));	
+		HttpSession session=request.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("member");
 		
-		if(dao.insert_RR(vo)) {
+		vo.setRrcontent(request.getParameter("content")); // 대댓글 내용
+		vo.setMid(mvo.getMid()); // 작성자 id
+		vo.setBid(Integer.parseInt(request.getParameter("bid"))); // 대댓글이 달린 게시글 번호
+		vo.setRid(Integer.parseInt(request.getParameter("rid"))); // 대댓글이 달린 댓글 번호
+		
+		if(dao.insert_RR(vo)) { // 대댓글 작성
 			forward = new ActionForward();
 			forward.setPath("communityBoard.do");
 			forward.setRedirect(false);
 		}
 		else {
-			throw new Exception("insertRR ����");
+			throw new Exception("insertRR 오류");
 		}
 		
 		request.setAttribute("cnt", request.getParameter("cnt"));

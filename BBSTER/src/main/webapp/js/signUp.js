@@ -9,7 +9,6 @@
       var pw_re = document.getElementById("signup_form_password_re");
       var name = document.getElementById("signup_form_Name");
       var Nickname = document.getElementById("signup_form_Nickname");
-      var add = document.getElementById("signup-form-address2");
       var phone = document.getElementById("signup_form_phoneNumber");
       var email = document.getElementById("signup-form-email");
       
@@ -50,11 +49,11 @@
          pw_re.focus();
          return false;
       }
-      // 비밀번호 영문자+숫자+특수조합(8~25자리 입력) 정규식
-      var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+      // 비밀번호 영문자+숫자+특수조합(5~25자리 입력) 정규식
+      var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{5,25}$/;
       
       if(!pwdCheck.test(pw.value)){
-         alert("비밀번호는 영문자 + 숫자+ 특수문자 조합으로 8~25자리 사용해야 합니다.");
+         alert("비밀번호는 영문자 + 숫자+ 특수문자 조합으로 5~25자리 사용해야 합니다.");
          pw.focus();
          return false;
       }
@@ -84,35 +83,19 @@
          return false;
       }
       
-       var regBirth = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-       if (regBirth.test(birth.value) === false) {
-         alert("생년월일 형식이 올바르지 않습니다.");
-         birth.focus();
-         return false;
-        }
       if(phone.value==""){
          alert("휴대전화 번호를 입력하세요.");
          phone.focus();
          return false;
       }
       
-       var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+       var regPhone = /^01([0|1|6|7|8|9])?([0-9]{3,4})?([0-9]{4})$/;
        if (regPhone.test(phone.value) === false) {
          alert("휴대폰 번호 형식이 올바르지 않습니다.");
          phone.focus();
          return false;
         }
-       
-       if($("#gender").val()==""){
-         alert("성별을 선택해주세요.");
-         $("#gender").val().focus();
-      }
-      
-      if(add.value==""){
-         alert("주소를 입력하세요.");
-         add.focus();
-         return false;
-      }
+
       // 이메일 정규식
       if(email.value==""){
          alert("이메일 주소를 입력하세요.");
@@ -131,7 +114,6 @@
       alert("회원가입이 완료되었습니다.");
 
       document.regForm.submit();
-      location.href="index.html";
       
    }
 

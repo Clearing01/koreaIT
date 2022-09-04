@@ -9,42 +9,62 @@ import vo.MemberVO;
 
 public class UpdateMAction implements Action{
 
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session=request.getSession();
-		
-		ActionForward forward = null;
-		MemberVO vo = new MemberVO();
-		MemberDAO dao = new MemberDAO();
-		
-		vo.setMid(request.getParameter("mid"));
-		vo.setMpw(request.getParameter("mpw"));
-		vo.setMname(request.getParameter("mname"));
-
-		if(dao.update_M(vo)) {
-			session.invalidate();
-			forward = new ActionForward();
-			forward.setPath("main.do");
-			forward.setRedirect(true);
-		}
-		else {
-			throw new Exception("updateM ¿À·ù");
-		}
-		
-		return forward;
-	}
+   @Override
+   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      
+      ActionForward forward = null;
+      MemberVO vo = new MemberVO();
+      MemberDAO dao = new MemberDAO();
+            
+      HttpSession session=request.getSession();
+      MemberVO mvo = (MemberVO)session.getAttribute("member");
+      
+      vo.setMid(mvo.getMid()); // í˜„ì¬ ì ‘ì†í•œ ë©¤ë²„ id
+      vo.setMpw(request.getParameter("mpw")); // ìˆ˜ì •í•  ë¹„ë°€ë²ˆí˜¸
+      vo.setNickname(request.getParameter("nickname")); // ìˆ˜ì •í•  ë‹‰ë„¤ì„
+      
+      if(request.getParameter("nickname")!=null) {
+         if(dao.update_MY(vo)) { // ë©¤ë²„ ì •ë³´ ìˆ˜ì •
+            
+            forward = new ActionForward();
+            forward.setPath("main.do");
+            forward.setRedirect(true);
+         }
+         else {
+            throw new Exception("updateMY ì˜¤ë¥˜");
+         }
+         
+         return forward;
+      }
+      else {
+         if(dao.update_MPW(vo)) { // ë©¤ë²„ ì •ë³´ ìˆ˜ì •
+            session.invalidate();
+            forward = new ActionForward();
+            forward.setPath("main.do");
+            forward.setRedirect(true);
+         }
+         else {
+            throw new Exception("updateMPW ì˜¤ë¥˜");
+         }
+         
+         return forward;
+         
+      }
+      
+      
+   }
 
 }
 
 /*
-		else if(action.equals("memberUpdate")){
-			if(mDAO.update(mVO)){
-				session.invalidate(); // ¼¼¼Ç Á¤º¸ ÀüÃ¼ Á¦°ÅÇÏ±â
-				// session.removeAttribute("member"); ÀÏÁ¤ Á¤º¸ Å¸°ÙÇÏ¿© »èÁ¦µµ °¡´É
-				response.sendRedirect("login.jsp");
-			}
-			else {
-				throw new Exception("memberUpdate ¿À·ù");
-			}
-		}
+      else if(action.equals("memberUpdate")){
+         if(mDAO.update(mVO)){
+            session.invalidate(); //             Ã¼      Ï± 
+            // session.removeAttribute("member");           Å¸   Ï¿             
+            response.sendRedirect("login.jsp");
+         }
+         else {
+            throw new Exception("memberUpdate     ");
+         }
+      }
 */
